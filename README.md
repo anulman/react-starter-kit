@@ -38,7 +38,7 @@ bun run dev
 
 ### 13 Core Components
 
-All follow the same pattern: BaseUI primitive → Panda CSS `cva()` recipe → typed props → `forwardRef`.
+All follow the same pattern: BaseUI primitive -> Panda CSS `cva()` recipe -> typed props -> `forwardRef`.
 
 ```tsx
 import * as ui from "@/components/ui";
@@ -109,7 +109,7 @@ function MyComponent() {
 
 ### Layout Utilities
 
-Re-exported from Panda CSS JSX — composable flex/grid primitives:
+Re-exported from Panda CSS JSX  --  composable flex/grid primitives:
 
 ```tsx
 import { Flex, Grid, HStack, VStack, Box, Center } from "@/components/layout";
@@ -155,7 +155,7 @@ export const Route = createFileRoute("/_authed")({
   component: () => <Outlet />,
 });
 
-// src/routes/_authed/dashboard.tsx → /dashboard (protected)
+// src/routes/_authed/dashboard.tsx -> /dashboard (protected)
 ```
 
 **Server functions:**
@@ -182,7 +182,7 @@ export const getItems = createServerFn({ method: "GET" })
 import { env } from "@/lib/env";
 const apiUrl = env.VITE_API_URL;
 
-// Server-side (inside request handlers only — not at module top level)
+// Server-side (inside request handlers only  --  not at module top level)
 import { getServerEnv } from "@/lib/serverEnv";
 const { SECRET_KEY } = getServerEnv();
 ```
@@ -197,7 +197,7 @@ API_TOKEN=dev-token
 
 Self-contained patterns in `recipes/` you can copy into your project when needed. Each has its own README with setup instructions.
 
-### `recipes/auth/` — OTP Authentication
+### `recipes/auth/`  --  OTP Authentication
 
 Passwordless auth with verification codes (email/SMS). Dual-token session pattern: long-lived session cookie (3 months) + short-lived JWT (5 minutes).
 
@@ -223,7 +223,7 @@ export const getProfile = createServerFn({ method: "GET" })
 
 **Includes:** OtpInput component, session management (Lucia Auth-inspired), auth middleware, JWKS endpoint pattern.
 
-### `recipes/authoring/` — Rich Text & Markdown
+### `recipes/authoring/`  --  Rich Text & Markdown
 
 Markdown rendering and TipTap-based rich text editing.
 
@@ -244,7 +244,7 @@ import { MarkdownEditor } from "@/features/authoring/MarkdownEditor";
 
 **Extra deps:** `react-markdown`, `remark-gfm`, `@tiptap/react`, `@tiptap/starter-kit`
 
-### `recipes/convex/` — Real-time Database
+### `recipes/convex/`  --  Real-time Database
 
 [Convex](https://convex.dev) integration with TanStack Query bridge for unified caching + real-time subscriptions.
 
@@ -253,7 +253,7 @@ import { useQuery } from "@tanstack/react-query";
 import { convexQuery } from "@convex-dev/react-query";
 import { api } from "@/convex/_generated/api";
 
-// Reactive query — auto-updates when data changes
+// Reactive query  --  auto-updates when data changes
 const { data: items } = useQuery(
   convexQuery(api.items.list, { projectId })
 );
@@ -267,7 +267,7 @@ const { data: details } = useQuery({
 
 **Extra deps:** `convex`, `@convex-dev/react-query`
 
-### `recipes/analytics/` — PostHog
+### `recipes/analytics/`  --  PostHog
 
 Client + server PostHog setup with page tracking and feature flags.
 
@@ -289,7 +289,7 @@ function CheckoutButton() {
 
 **Extra deps:** `posthog-js`, `posthog-node`
 
-### `recipes/storybook/` — Component Stories
+### `recipes/storybook/`  --  Component Stories
 
 Storybook config pre-wired for Panda CSS + BaseUI components. Includes a11y addon.
 
@@ -367,8 +367,8 @@ const cardRecipe = cva({
 ```
 
 **Rules:**
-- `css()` / `cva()` only — no `styled()` API
-- z-index: only `-1`, `0`, or `1` — never arbitrary values
+- `css()` / `cva()` only  --  no `styled()` API
+- z-index: only `-1`, `0`, or `1`  --  never arbitrary values
 - Mobile-first responsive: `{ base: "sm", md: "md", lg: "lg" }`
 - Never nest `<Button>` inside `<Link>` (invalid HTML)
 
@@ -377,8 +377,8 @@ const cardRecipe = cva({
 This template includes `CLAUDE.md` and `AGENTS.md` for AI coding agents. If you use [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Codex](https://openai.com/codex), or similar tools, they'll pick up the project conventions automatically.
 
 **Recommended tools:**
-- [`qmd`](https://github.com/qmd-org/qmd) — fast file reading for large codebases
-- [`ast-grep`](https://ast-grep.github.io) — structural code search and refactoring
+- [`qmd`](https://github.com/qmd-org/qmd)  --  fast file reading for large codebases
+- [`ast-grep`](https://ast-grep.github.io)  --  structural code search and refactoring
 
 ## License
 
