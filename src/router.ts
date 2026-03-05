@@ -1,6 +1,10 @@
 import { createRouter } from "@tanstack/react-router";
 import { QueryClient } from "@tanstack/react-query";
 import { routeTree } from "./routeTree.gen";
+import {
+  DefaultErrorComponent,
+  DefaultNotFound,
+} from "@/components/ErrorBoundary";
 
 export interface RouterContext {
   queryClient: QueryClient;
@@ -18,6 +22,8 @@ export async function getRouter() {
   const router = createRouter({
     routeTree,
     scrollRestoration: true,
+    defaultErrorComponent: DefaultErrorComponent,
+    defaultNotFoundComponent: DefaultNotFound,
     context: {
       queryClient,
     },

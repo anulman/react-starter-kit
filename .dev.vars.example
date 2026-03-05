@@ -1,0 +1,14 @@
+# Server-side environment variables for local development.
+# Copy this file to .dev.vars and fill in your values.
+#
+# These are available via getServerEnv() inside server functions.
+# They are NOT exposed to the browser.
+#
+# For client-side variables, use VITE_* prefix in .env or vite config.
+
+# Example: database connection
+# DATABASE_URL=postgresql://localhost:5432/myapp
+
+# Example: API keys for third-party services
+# API_KEY=your-api-key-here
+# JWT_SECRET=generate-a-random-secret

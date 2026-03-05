@@ -7,6 +7,11 @@ export default defineConfig({
   jsxFramework: "react",
   outdir: "styled-system",
 
+  // Dark mode via CSS class on <html> (toggled by src/lib/theme.ts)
+  conditions: {
+    dark: "[data-theme=dark] &",
+  },
+
   theme: {
     tokens: {
       colors: {
@@ -84,12 +89,23 @@ export default defineConfig({
     semanticTokens: {
       colors: {
         bg: {
-          DEFAULT: { value: "{colors.background}" },
-          surface: { value: "{colors.surface}" },
+          DEFAULT: {
+            value: { base: "{colors.background}", _dark: "#0a0a0a" },
+          },
+          surface: {
+            value: { base: "{colors.surface}", _dark: "#1a1a1a" },
+          },
         },
         fg: {
-          DEFAULT: { value: "{colors.text}" },
-          muted: { value: "{colors.text.muted}" },
+          DEFAULT: {
+            value: { base: "{colors.text}", _dark: "#e5e5e5" },
+          },
+          muted: {
+            value: { base: "{colors.text.muted}", _dark: "#a0a0a0" },
+          },
+        },
+        "border.semantic": {
+          value: { base: "{colors.border}", _dark: "#2a2a2a" },
         },
       },
     },

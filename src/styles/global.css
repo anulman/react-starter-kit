@@ -42,6 +42,11 @@
     outline: 2px solid currentColor;
     outline-offset: 2px;
   }
+
+  /* Dark mode base styles (toggled via data-theme attribute) */
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
 }
 
 /* Animations for feedback components */
