@@ -1,34 +1,3 @@
-/**
- * Modal Component
- *
- * A styled modal dialog built on BaseUI's accessible Dialog primitive.
- * Controlled component with optional title, description, and close button.
- *
- * @example
- * ```tsx
- * import { Modal, Button } from "@/components/ui";
- *
- * function MyComponent() {
- *   const [open, setOpen] = useState(false);
- *
- *   return (
- *     <>
- *       <Button onClick={() => setOpen(true)}>Open Modal</Button>
- *       <Modal
- *         open={open}
- *         onOpenChange={setOpen}
- *         title="Confirm Action"
- *         description="Are you sure you want to proceed?"
- *       >
- *         <Button onClick={() => setOpen(false)}>Close</Button>
- *       </Modal>
- *     </>
- *   );
- * }
- * ```
- *
- * @see ConfirmDialog - A specialized modal for confirmation dialogs
- */
 import type { ReactNode } from "react";
 import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
 import { css } from "styled-system/css";
@@ -77,9 +46,7 @@ const closeButtonStyles = css({
   right: "md",
   color: "text.muted",
   cursor: "pointer",
-  _hover: {
-    color: "text",
-  },
+  _hover: { color: "text" },
 });
 
 export type ModalProps = {

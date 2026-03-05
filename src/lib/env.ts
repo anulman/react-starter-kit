@@ -1,32 +1,29 @@
 /**
- * Client-side environment variable access
+ * Client-side environment variables
  *
- * VITE_* prefixed variables are safe to expose to the browser.
- *
- * For server-side secrets, use:
- *   import { getServerEnv } from "@/lib/serverEnv"
- *
- * Server env must be accessed inside request handlers, not at module load time,
- * because Cloudflare Workers don't have process.env — they use worker bindings.
+ * For VITE_* prefixed variables safe to expose to the browser.
+ * For server-side secrets, use: import { getServerEnv } from "@/lib/serverEnv"
  */
 
 interface ClientEnvironment {
+  /** App name */
+  VITE_APP_NAME: string;
   /** App base URL */
   VITE_APP_URL: string;
-  // Add your VITE_* variables here
 }
 
 function validateClientEnv(): ClientEnvironment {
   const viteEnv = import.meta.env;
 
   return {
+    VITE_APP_NAME: viteEnv.VITE_APP_NAME || "My App",
     VITE_APP_URL:
       viteEnv.VITE_APP_URL ||
-      (viteEnv.DEV ? "http://localhost:3000" : "https://your-app.workers.dev"),
+      (viteEnv.DEV ? "http://localhost:3000" : "http://localhost:4173"),
   };
 }
 
-/** Client-side environment variables. Safe to use anywhere. */
+/** Client-side environment variables — safe to use anywhere */
 export const env = validateClientEnv();
 
 export const isProduction = import.meta.env.PROD;

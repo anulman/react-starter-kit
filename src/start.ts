@@ -1,12 +1,3 @@
-/// <reference types="vite/client" />
-import { getRouterManifest } from "@tanstack/react-start/router-manifest";
-import {
-  createStartHandler,
-  defaultStreamHandler,
-} from "@tanstack/react-start/server";
-import { createRouter } from "./router";
+import { createStart } from "@tanstack/react-start";
 
-export default createStartHandler({
-  createRouter,
-  getRouterManifest,
-})(defaultStreamHandler);
+export const startInstance = createStart();

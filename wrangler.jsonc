@@ -1,6 +1,16 @@
 {
-  "name": "react-starter-kit",
-  "compatibility_date": "2025-04-01",
-  "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry"
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "my-app",
+	"compatibility_date": "2025-09-02",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"placement": {
+		"mode": "smart"
+	},
+	"vars": {
+		// Add VITE_* vars here for production
+	},
+	"workers_dev": true,
+	"preview_urls": true
 }

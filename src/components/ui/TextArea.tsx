@@ -31,21 +31,9 @@ const textAreaRecipe = cva({
   },
   variants: {
     size: {
-      sm: {
-        px: "sm",
-        py: "xs",
-        fontSize: "sm",
-      },
-      md: {
-        px: "md",
-        py: "sm",
-        fontSize: "md",
-      },
-      lg: {
-        px: "md",
-        py: "md",
-        fontSize: "lg",
-      },
+      sm: { px: "sm", py: "xs", fontSize: "sm" },
+      md: { px: "md", py: "sm", fontSize: "md" },
+      lg: { px: "md", py: "md", fontSize: "lg" },
     },
     hasError: {
       true: {

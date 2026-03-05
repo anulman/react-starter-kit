@@ -1,41 +1,48 @@
 /// <reference types="vite/client" />
 import type { ReactNode } from "react";
-import { Outlet, ScrollRestoration, createRootRoute } from "@tanstack/react-router";
+import * as tsr from "@tanstack/react-router";
+import { QueryClientProvider } from "@tanstack/react-query";
+import type { RouterContext } from "@/router";
+import globalStyles from "@/styles/global.css?url";
 import { ToastProvider } from "@/components/ui";
 
-export const Route = createRootRoute({
+export const Route = tsr.createRootRouteWithContext<RouterContext>()({
   head() {
     return {
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: "React Starter Kit" },
+        { title: "My App" },
       ],
+      links: [{ rel: "stylesheet", href: globalStyles }],
     };
   },
   component: RootComponent,
 });
 
 function RootComponent() {
+  const { queryClient } = Route.useRouteContext();
+
   return (
     <RootDocument>
-      <ToastProvider>
-        <Outlet />
-      </ToastProvider>
+      <QueryClientProvider client={queryClient}>
+        <ToastProvider>
+          <tsr.Outlet />
+        </ToastProvider>
+      </QueryClientProvider>
     </RootDocument>
   );
 }
 
-function RootDocument({ children }: { children: ReactNode }) {
+function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <tsr.HeadContent />
       </head>
       <body>
         {children}
-        <ScrollRestoration />
+        <tsr.Scripts />
       </body>
     </html>
   );

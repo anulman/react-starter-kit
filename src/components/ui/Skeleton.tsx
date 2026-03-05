@@ -7,21 +7,12 @@ const skeletonRecipe = cva({
   },
   variants: {
     variant: {
-      text: {
-        height: "1em",
-        borderRadius: "sm",
-      },
-      circular: {
-        borderRadius: "full",
-      },
-      rectangular: {
-        borderRadius: "sm",
-      },
+      text: { height: "1em", borderRadius: "sm" },
+      circular: { borderRadius: "full" },
+      rectangular: { borderRadius: "sm" },
     },
   },
-  defaultVariants: {
-    variant: "text",
-  },
+  defaultVariants: { variant: "text" },
 });
 
 type SkeletonVariants = RecipeVariantProps<typeof skeletonRecipe>;
@@ -36,8 +27,6 @@ export function Skeleton({ variant, width, height, className }: SkeletonProps) {
   const style: React.CSSProperties = {};
   if (width) style.width = typeof width === "number" ? `${width}px` : width;
   if (height) style.height = typeof height === "number" ? `${height}px` : height;
-
-  // For circular variant, if only width is set, make it square
   if (variant === "circular" && width && !height) {
     style.height = style.width;
   }

@@ -1,0 +1,23 @@
+import type { SVGProps } from "react";
+
+export type ChevronRightIconProps = SVGProps<SVGSVGElement> & {
+  size?: number;
+};
+
+export function ChevronRightIcon({ size = 16, ...props }: ChevronRightIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  );
+}

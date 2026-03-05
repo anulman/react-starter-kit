@@ -1,32 +1,13 @@
-/**
- * Design System — Core Components
- *
- * Usage:
- *   import * as ui from "@/components/ui";
- *   <ui.Button variant="primary">Click me</ui.Button>
- *
- * Additional components available in recipes/:
- *   - recipes/auth/        → OtpInput
- *   - recipes/markdown/    → Markdown, MarkdownEditor
- *   - recipes/layout/      → Card, Section, Header, Sidebar, Main
- *   - recipes/data-display/ → Table, List, Avatar, Timestamp
- *   - recipes/pickers/     → ColorPicker, IconPicker, etc.
- */
-
-// Forms
-export { Button } from "./Button";
-export { Input } from "./Input";
-export { TextArea } from "./TextArea";
-export { Select } from "./Select";
-export { Checkbox } from "./Checkbox";
-
-// Feedback
-export { Modal } from "./Modal";
-export { Dialog, ConfirmDialog, AlertDialog } from "./Dialog";
-export { ToastProvider, useToast } from "./Toast";
-export { LoadingSpinner } from "./LoadingSpinner";
-export { Skeleton } from "./Skeleton";
-
-// Data Display
-export { Badge } from "./Badge";
-export { EmptyState } from "./EmptyState";
+export { Button, type ButtonProps } from "./Button";
+export { Input, type InputProps } from "./Input";
+export { TextArea, type TextAreaProps } from "./TextArea";
+export { Select, type SelectProps, type SelectOption } from "./Select";
+export { Checkbox, type CheckboxProps } from "./Checkbox";
+export { Modal, type ModalProps } from "./Modal";
+export { ConfirmDialog, type ConfirmDialogProps } from "./ConfirmDialog";
+export { AlertDialog, type AlertDialogProps } from "./AlertDialog";
+export { ToastProvider, useToast, type ToastProviderProps } from "./ToastProvider";
+export { LoadingSpinner, type LoadingSpinnerProps } from "./LoadingSpinner";
+export { Skeleton, type SkeletonProps } from "./Skeleton";
+export { Badge, type BadgeProps } from "./Badge";
+export { EmptyState, type EmptyStateProps } from "./EmptyState";

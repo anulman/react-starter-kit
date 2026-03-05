@@ -35,16 +35,10 @@ const inputRecipe = cva({
   },
   variants: {
     size: {
-      min: {
-        px: "xs",
-        py: "2px",
-        fontSize: "16px",
-        minHeight: "min-content",
-      },
       sm: {
         px: "sm",
         py: "xs",
-        fontSize: "md", // 16px minimum prevents iOS auto-zoom on focus
+        fontSize: "md",
         minHeight: "32px",
       },
       md: {
@@ -81,36 +75,16 @@ export type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> &
   InputVariants & {
     label?: string;
     error?: string;
-    /** Props applied to the wrapper div (for layout, e.g., className, style) */
     containerProps?: HTMLAttributes<HTMLDivElement>;
   };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  {
-    label,
-    error,
-    size,
-    className,
-    containerProps,
-    id: providedId,
-    type,
-    placeholder,
-    ...props
-  },
+  { label, error, size, className, containerProps, id: providedId, ...props },
   ref
 ) {
   const generatedId = useId();
   const id = providedId ?? generatedId;
   const errorId = `${id}-error`;
-
-  const inputClassName = cx(
-    className,
-    inputRecipe({ size, hasError: !!error })
-  );
-
-  // Default placeholder for phone inputs (without country code - shown in selector)
-  const resolvedPlaceholder =
-    type === "tel" && !placeholder ? "555 123 4567" : placeholder;
 
   return (
     <div {...containerProps}>
@@ -122,11 +96,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <BaseInput
         ref={ref}
         id={id}
-        type={type}
-        placeholder={resolvedPlaceholder}
         aria-invalid={!!error}
         aria-describedby={error ? errorId : undefined}
-        className={inputClassName}
+        className={cx(className, inputRecipe({ size, hasError: !!error }))}
         {...props}
       />
       {error && (

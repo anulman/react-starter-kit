@@ -1,44 +1,38 @@
 # Storybook Recipe
 
-Component development and visual testing with Storybook.
-
-## Additional Dependencies
-
-```bash
-bun add -d storybook @storybook/react-vite @storybook/test @storybook/addon-a11y @storybook/addon-docs
-```
-
 ## Setup
 
 ```bash
-npx storybook init --builder vite
+bun add -d storybook @storybook/react-vite @storybook/addon-docs @storybook/addon-a11y
 ```
 
-## Story Pattern
+## Configuration
 
-```typescript
+Copy `.storybook/` into your project root. Add scripts to `package.json`:
+
+```json
+{
+  "dev:storybook": "storybook dev -p 6006 --no-open",
+  "build:storybook": "storybook build"
+}
+```
+
+## Writing Stories
+
+```tsx
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { userEvent, within, expect } from "@storybook/test";
+import { Button } from "@/components/ui";
 
 const meta = {
-  component: MyComponent,
+  title: "UI/Button",
+  component: Button,
   tags: ["autodocs"],
-} satisfies Meta<typeof MyComponent>;
+} satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {},
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    expect(canvas.getByRole("button")).toBeInTheDocument();
-  },
+export const Primary: Story = {
+  args: { children: "Click me", variant: "primary" },
 };
 ```
-
-## Guidelines
-
-- Every UI component should have a `.stories.tsx` file
-- Include stories for: default state, all variants, disabled state, controlled examples
-- Use `play` functions for interactive testing

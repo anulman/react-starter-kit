@@ -1,29 +1,3 @@
-/**
- * Button Component
- *
- * A styled button built on BaseUI's accessible Button primitive.
- * Supports multiple variants and sizes with consistent styling.
- *
- * @example
- * ```tsx
- * import { Button } from "@/components/ui";
- *
- * // Variants
- * <Button variant="primary">Submit</Button>
- * <Button variant="secondary">Cancel</Button>
- * <Button variant="danger">Delete</Button>
- * <Button variant="ghost">More options</Button>
- *
- * // Sizes
- * <Button size="sm">Small</Button>
- * <Button size="md">Medium</Button>
- * <Button size="lg">Large</Button>
- *
- * // States
- * <Button disabled>Disabled</Button>
- * <Button loading>Saving...</Button>
- * ```
- */
 import { forwardRef, type ComponentPropsWithoutRef } from "react";
 import { Button as BaseButton } from "@base-ui-components/react/button";
 import { cva, type RecipeVariantProps } from "styled-system/css";
@@ -112,11 +86,9 @@ type ButtonVariants = RecipeVariantProps<typeof buttonRecipe>;
 
 export type ButtonProps = ComponentPropsWithoutRef<typeof BaseButton> &
   ButtonVariants & {
-    /** Show loading spinner and disable the button */
     loading?: boolean;
   };
 
-/** Map button size to spinner size */
 const spinnerSizeMap = {
   sm: "xs",
   md: "sm",

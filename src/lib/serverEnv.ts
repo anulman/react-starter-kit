@@ -7,19 +7,15 @@
  * Usage:
  *   const myServerFn = createServerFn().handler(async () => {
  *     const { MY_SECRET } = await getServerEnv();
- *     // ...
  *   });
  *
- * For client-side vars (VITE_*), use:
- *   import { env } from "@/lib/env"
- *
- * NOTE: cloudflare:workers import is lazy to avoid breaking Node.js (Vitest).
+ * For client-side vars (VITE_*), use: import { env } from "@/lib/env"
  */
 
 export interface ServerEnvironment {
-  // Add your server-side secrets here:
-  // MY_API_KEY: string;
+  // Add your server-side secrets here, e.g.:
   // DATABASE_URL: string;
+  // API_KEY: string;
 }
 
 type EnvWithSecrets = Env & Partial<ServerEnvironment>;
@@ -48,25 +44,20 @@ async function getEnv(): Promise<EnvWithSecrets> {
 
 /**
  * Get server-side environment variables from Cloudflare worker bindings.
- *
- * MUST be called inside a request handler (createServerFn, API route, loader, etc.)
- * Will throw if called at module load time or if required vars are missing.
+ * MUST be called inside a request handler.
  */
 export async function getServerEnv(): Promise<ServerEnvironment> {
   const env = await getEnv();
 
-  // Add your required server vars here:
-  // const required = ["MY_API_KEY", "DATABASE_URL"] as const;
+  // Validate required vars here:
+  // const required = ["DATABASE_URL", "API_KEY"] as const;
   // const missing = required.filter((key) => !env[key]);
   // if (missing.length > 0) {
-  //   throw new Error(
-  //     `Missing required server env vars: ${missing.join(", ")}\n` +
-  //     `Local: set in .dev.vars\n` +
-  //     `Prod: set in Cloudflare dashboard → Workers → Settings → Variables`
-  //   );
+  //   throw new Error(`Missing server env vars: ${missing.join(", ")}`);
   // }
 
   return {
-    // MY_API_KEY: env.MY_API_KEY!,
+    // DATABASE_URL: env.DATABASE_URL!,
+    // API_KEY: env.API_KEY!,
   };
 }

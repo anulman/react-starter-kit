@@ -1,31 +1,30 @@
-# Auth Recipe
+# Auth Recipe: OTP Verification + Dual-Token Sessions
 
-Passwordless authentication with Twilio Verify + Lucia Auth-inspired dual-token sessions.
+Pattern for passwordless authentication using verification codes (email/SMS).
 
-## What's Included
+## Architecture
 
-- `components/OtpInput.tsx` — Six-digit verification code input with auto-advance and paste support
-- Session management patterns (3-month sessions + 5-minute JWTs, RS256)
-- Auth middleware for TanStack Start server functions
-- JWKS endpoint pattern for external JWT validation (e.g., Convex)
-- Mobile detection (defaults to phone verification on mobile)
+- **Session token** (long-lived, ~3 months): Stored in httpOnly cookie, identifies the session
+- **Access token** (short-lived, ~5 minutes): JWT for API authentication, refreshed automatically
+- **Middleware**: Validates tokens on every request, refreshes access token if expired
 
-## Additional Dependencies
+## Files
 
-```bash
-bun add twilio jose cookie-es nanoid libphonenumber-js
-```
+- `OtpInput.tsx` — Individual digit input boxes with paste/autofill support
+- `middleware.ts` — Auth middleware pattern for TanStack Start
+- `session.ts` — Session management utilities
 
-## Key Patterns
+## Setup
 
-- **Dual-token**: Long-lived session cookie (3mo) + short-lived JWT (5min)
-- **No PII in JWTs**: Only user ID and resource memberships
-- **Session computed once at router mount**: Auth-changing operations use hard navigation (`window.location.href`)
-- **Find-or-create**: Auto-create user on first successful verification
-
-## Integration
-
-1. Copy `components/OtpInput.tsx` into `src/components/ui/` (or a domain-specific location)
-2. Set up Twilio Verify service
-3. Implement session management (see HomeHub's `src/lib/auth.ts` for reference)
-4. Add auth middleware to your server functions
+1. Install your verification provider SDK
+2. Copy files into `src/`
+3. Add middleware to `src/start.ts`:
+   ```ts
+   import { createStart } from "@tanstack/react-start";
+   import { authMiddleware } from "./lib/auth";
+   
+   export const startInstance = createStart(() => ({
+     requestMiddleware: [authMiddleware],
+   }));
+   ```
+4. Add session to router context (see `session.ts`)

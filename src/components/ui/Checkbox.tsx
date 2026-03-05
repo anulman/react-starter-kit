@@ -12,41 +12,22 @@ const checkboxRecipe = cva({
     bg: "background",
     cursor: "pointer",
     transition: "background-color 150ms, border-color 150ms",
-    _hover: {
-      borderColor: "text.muted",
-    },
+    _hover: { borderColor: "text.muted" },
     _focus: {
       outline: "2px solid token(colors.primary)",
       outlineOffset: "2px",
     },
-    "&[data-checked]": {
-      bg: "primary",
-      borderColor: "primary",
-    },
-    "&[data-disabled]": {
-      opacity: 0.5,
-      cursor: "not-allowed",
-    },
+    "&[data-checked]": { bg: "primary", borderColor: "primary" },
+    "&[data-disabled]": { opacity: 0.5, cursor: "not-allowed" },
   },
   variants: {
     size: {
-      sm: {
-        width: "16px",
-        height: "16px",
-      },
-      md: {
-        width: "20px",
-        height: "20px",
-      },
-      lg: {
-        width: "24px",
-        height: "24px",
-      },
+      sm: { width: "16px", height: "16px" },
+      md: { width: "20px", height: "20px" },
+      lg: { width: "24px", height: "24px" },
     },
   },
-  defaultVariants: {
-    size: "md",
-  },
+  defaultVariants: { size: "md" },
 });
 
 const indicatorStyles = css({
@@ -63,11 +44,7 @@ const wrapperStyles = css({
 });
 
 const checkboxLabelRecipe = cva({
-  base: {
-    color: "text",
-    cursor: "pointer",
-    userSelect: "none",
-  },
+  base: { color: "text", cursor: "pointer", userSelect: "none" },
   variants: {
     size: {
       sm: { fontSize: "sm" },
@@ -75,9 +52,7 @@ const checkboxLabelRecipe = cva({
       lg: { fontSize: "lg" },
     },
   },
-  defaultVariants: {
-    size: "md",
-  },
+  defaultVariants: { size: "md" },
 });
 
 type CheckboxVariants = RecipeVariantProps<typeof checkboxRecipe>;

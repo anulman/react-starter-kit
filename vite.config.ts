@@ -13,6 +13,11 @@ export default defineConfig({
       external: ["cloudflare:workers"],
     },
   },
+  resolve: {
+    alias: {
+      "use-sync-external-store/shim/index.js": "react",
+    },
+  },
   optimizeDeps: {
     exclude: ["@tanstack/react-start", "@tanstack/start-server-core"],
   },
@@ -20,7 +25,6 @@ export default defineConfig({
     tsConfigPaths(),
     cloudflare({ viteEnvironment: { name: "ssr" } }),
     tanstackStart(),
-    // React's vite plugin must come after Start's vite plugin
     viteReact(),
   ],
 });

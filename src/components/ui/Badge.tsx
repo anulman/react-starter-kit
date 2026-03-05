@@ -12,52 +12,19 @@ const badgeRecipe = cva({
   },
   variants: {
     variant: {
-      default: {
-        bg: "surface",
-        color: "text",
-      },
-      primary: {
-        bg: "primary",
-        color: "white",
-      },
-      success: {
-        bg: "success",
-        color: "white",
-      },
-      warning: {
-        bg: "warning",
-        color: "text",
-      },
-      danger: {
-        bg: "danger",
-        color: "white",
-      },
+      default: { bg: "surface", color: "text" },
+      primary: { bg: "primary", color: "white" },
+      success: { bg: "success", color: "white" },
+      warning: { bg: "warning", color: "text" },
+      danger: { bg: "danger", color: "white" },
     },
     size: {
-      sm: {
-        px: "xs",
-        py: "0",
-        fontSize: "xs",
-        minHeight: "20px",
-      },
-      md: {
-        px: "sm",
-        py: "xs",
-        fontSize: "sm",
-        minHeight: "24px",
-      },
-      lg: {
-        px: "md",
-        py: "xs",
-        fontSize: "md",
-        minHeight: "28px",
-      },
+      sm: { px: "xs", py: "0", fontSize: "xs", minHeight: "20px" },
+      md: { px: "sm", py: "xs", fontSize: "sm", minHeight: "24px" },
+      lg: { px: "md", py: "xs", fontSize: "md", minHeight: "28px" },
     },
   },
-  defaultVariants: {
-    variant: "default",
-    size: "md",
-  },
+  defaultVariants: { variant: "default", size: "md" },
 });
 
 type BadgeVariants = RecipeVariantProps<typeof badgeRecipe>;

@@ -9,7 +9,6 @@ export const labelRecipe = cva({
   },
   variants: {
     size: {
-      min: { fontSize: "xs" },
       sm: { fontSize: "xs" },
       md: { fontSize: "sm" },
       lg: { fontSize: "md" },
@@ -27,7 +26,6 @@ export const errorRecipe = cva({
   },
   variants: {
     size: {
-      min: { fontSize: "xs" },
       sm: { fontSize: "xs" },
       md: { fontSize: "sm" },
       lg: { fontSize: "md" },

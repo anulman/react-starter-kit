@@ -1,128 +1,319 @@
-# CLAUDE.md — React Starter Kit
+# CLAUDE.md — AI Development Guide
 
-## What This Is
+## Project Overview
 
-An opinionated React starter kit for building production apps on **Cloudflare Workers**. Extracted from a real production app (HomeHub). TanStack Start + Panda CSS + BaseUI + Bun.
+React starter kit built on **TanStack Start** deployed to **Cloudflare Workers**. Uses **Panda CSS** for zero-runtime styling and **BaseUI** for accessible headless components.
 
-## Architecture
+**Stack**: Bun · TanStack Start · React 19 · Panda CSS · BaseUI · Vitest · Cloudflare Workers
 
-```
-src/
-├── components/
-│   ├── ui/          # Design system (BaseUI + Panda CSS wrappers)
-│   ├── layout/      # Flex, Grid, HStack, VStack, Box, Center
-│   └── icons/       # SVG icon components (16x16 default, `size` prop)
-├── lib/
-│   ├── env.ts       # Client env (VITE_ prefix)
-│   └── serverEnv.ts # Server env (accessed inside request handlers only)
-├── routes/
-│   ├── __root.tsx    # HTML shell, providers
-│   ├── index.tsx     # Landing page
-│   └── api/          # Server endpoints
-├── styles/           # Global CSS if needed
-├── start.ts          # TanStack Start entry
-└── router.ts         # Router config + context
+## Quick Reference
 
-recipes/                # Opt-in integrations (copy what you need)
-├── auth/              # Twilio Verify + dual-token sessions + OtpInput component
-├── convex/            # Convex setup, TanStack Query bridge, schema patterns
-├── markdown/          # TipTap + MarkdownEditor component
-├── posthog/           # Analytics scaffolding (client + server)
-└── storybook/         # Storybook config + story patterns
+```bash
+bun install              # Install deps + generate styled-system/ + route tree
+bun run dev              # Dev server on :3000
+bun run build            # Production build
+bun run test             # Run tests (Vitest)
+bun run typecheck        # TypeScript check
+bun run deploy           # Deploy to Cloudflare Workers
 ```
 
-## Stack
+### File Locations
 
-| Layer | Choice | Why |
-|-------|--------|-----|
-| Framework | TanStack Start | File-based routing, SSR, server functions |
-| Runtime | Bun | Fast, TypeScript-native |
-| Deployment | Cloudflare Workers | Edge SSR via `@cloudflare/vite-plugin` |
-| Styling | Panda CSS | Zero-runtime, type-safe tokens, atomic CSS |
-| Components | BaseUI (headless) | Accessibility built-in, styled with Panda |
-| Testing | Vitest | Fast, Vite-native |
+| What | Where |
+|------|-------|
+| UI components | `src/components/ui/` |
+| Layout utilities | `src/components/layout/` |
+| Icons | `src/components/icons/` |
+| Routes | `src/routes/` |
+| Client env | `src/lib/env.ts` |
+| Server env | `src/lib/serverEnv.ts` |
+| Theme tokens | `panda.config.ts` |
+| Global CSS | `src/styles/global.css` |
+| Drop-in recipes | `recipes/` |
 
-## Key Conventions
+### Tool Recommendations
 
-### Styling
-- **`css()` / `cva()` only** — never use `styled()`
-- **Panda CSS tokens** for all values (colors, spacing, radii, fonts)
-- **`cva()` recipes** for component variants (size, variant, state)
-- **Mobile-first** responsive: `{ base: "sm", md: "md", lg: "lg" }`
-- **z-index: only -1, 0, 1** — never arbitrary values (50, 100, etc.)
-- **8-digit hex for alpha** — not `rgba()`
+If available, use `qmd` for quick file reading and `ast-grep` for structural code search/refactoring. These are particularly useful for navigating the component library and finding usage patterns.
 
-### Components
-- **Namespace import**: `import * as ui from "@/components/ui"`
-- **BaseUI primitive → Panda CSS wrapper** for every component
-- **`forwardRef` with named functions**: `forwardRef(function Button(...))`
-- **Never nest interactive elements**: no `<Button>` inside `<Link>`
-  - Style `<Link>` as button with `css()`, or use `navigate()` in `onClick`
-- **Export from barrel**: `src/components/ui/index.ts`
+---
 
-### Routing
-- `__root.tsx` = HTML shell + providers (no layout)
-- Layout routes (`_authed.tsx`) = authenticated shell, sidebar, etc.
-- **TanStack Router context > React Context** for navigation-scoped data
-- **React Context only for imperative UI** (toasts, modals)
-- **Dynamic imports for server-only code** in `beforeLoad`/`loader`:
-  ```typescript
-  if (typeof window === "undefined") {
-    const { getRequestHeader } = await import("@tanstack/react-start/server");
-  }
-  ```
+## Architecture Decisions
 
-### Environment Variables
-- **Client**: `VITE_` prefix, accessed via `src/lib/env.ts`
-- **Server**: accessed via `getServerEnv()` inside request handlers — never at module level
-- **CF Workers**: no `process.env` — use `.dev.vars` locally, Workers secrets in prod
+### Why TanStack Start + Cloudflare Workers
+SSR on the edge. File-based routing with type-safe params. Server functions that colocate with components. Cloudflare Workers for global distribution with smart placement.
 
-### Code Quality
-- **No `any` types** unless explicitly justified with a comment
-- **All pure functions exported and tested**
-- **Conventional commits**: `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`
-- **`!important` requires a comment** explaining why
+### Why Panda CSS (not Tailwind)
+- **Zero-runtime** — CSS generated at build time, no JS shipped for styles
+- **Type-safe tokens** — typos are compile errors, not silent bugs
+- **`cva()` recipes** — variant API for components, cleaner than className concatenation
+- Same DX as Tailwind (utility-first) but with type safety
+
+### Why BaseUI (not Radix/Headless UI)
+- Truly headless — zero default styles to fight
+- Accessible primitives (Dialog, Select, Checkbox, AlertDialog)
+- We wrap them with Panda CSS `cva()` recipes
+
+### Why `css()`/`cva()` only — no `styled()`
+- `styled()` creates wrapper components that obscure the DOM
+- `css()` and `cva()` produce classNames — predictable, debuggable, composable
+- One pattern across the whole codebase
+
+### z-index: only -1, 0, 1
+No z-index wars. Three values:
+- `-1`: Behind content (decorative)
+- `0`: Default
+- `1`: Above content (modals, dropdowns, toasts, fixed headers)
+
+Stacking within the same z-index is controlled by DOM order.
+
+### Namespace imports for UI
+```tsx
+import * as ui from "@/components/ui";
+<ui.Button variant="primary">Save</ui.Button>
+```
+Clear provenance. No naming conflicts. Easy to grep.
+
+### Server env via `getServerEnv()`
+Cloudflare Workers don't have `process.env`. Worker bindings are request-scoped. `getServerEnv()` abstracts this for both Workers and Node.js (tests).
+
+---
+
+## Component Creation Guide
+
+### Adding a new UI component
+
+1. **Create the file** in `src/components/ui/YourComponent.tsx`
+2. **Use `cva()` for variants**, `css()` for static styles:
+
+```tsx
+import { cva, type RecipeVariantProps } from "styled-system/css";
+
+const myRecipe = cva({
+  base: {
+    display: "flex",
+    borderRadius: "sm",
+  },
+  variants: {
+    size: {
+      sm: { px: "sm", py: "xs", fontSize: "sm" },
+      md: { px: "md", py: "sm", fontSize: "md" },
+    },
+    variant: {
+      primary: { bg: "primary", color: "white" },
+      secondary: { bg: "surface", color: "text" },
+    },
+  },
+  defaultVariants: { size: "md", variant: "primary" },
+});
+
+type MyVariants = RecipeVariantProps<typeof myRecipe>;
+```
+
+3. **Wrap BaseUI if applicable** (for interactive components):
+```tsx
+import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
+```
+
+4. **Export from barrel** — add to `src/components/ui/index.ts`
+5. **Accept `className` prop** for composition
+6. **Use `forwardRef`** for DOM-element components
+
+### Adding a new icon
+
+Follow the pattern in `src/components/icons/CheckIcon.tsx`:
+```tsx
+import type { SVGProps } from "react";
+
+export type MyIconProps = SVGProps<SVGSVGElement> & { size?: number };
+
+export function MyIcon({ size = 16, ...props }: MyIconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+      strokeLinejoin="round" {...props}>
+      {/* paths */}
+    </svg>
+  );
+}
+```
+
+Export from `src/components/icons/index.ts`.
+
+---
+
+## Styling Patterns
+
+### Static styles
+```tsx
+import { css } from "styled-system/css";
+
+const titleStyles = css({
+  fontSize: "lg",
+  fontWeight: "semibold",
+  color: "text",
+});
+```
+
+### Variant recipes
+```tsx
+import { cva } from "styled-system/css";
+
+const buttonRecipe = cva({
+  base: { /* shared styles */ },
+  variants: {
+    variant: { primary: { bg: "primary" }, ghost: { bg: "transparent" } },
+    size: { sm: { px: "sm" }, md: { px: "md" } },
+  },
+  defaultVariants: { variant: "primary", size: "md" },
+});
+
+// Usage: className={buttonRecipe({ variant: "ghost", size: "sm" })}
+```
+
+### Responsive breakpoints (mobile-first)
+```tsx
+const styles = css({
+  fontSize: { base: "sm", md: "md", lg: "lg" },
+  display: { base: "none", md: "flex" },
+});
+```
+
+Breakpoints: `sm` (640px), `md` (768px), `lg` (1024px), `xl` (1280px), `2xl` (1536px).
+
+### Layout components
+```tsx
+import { Flex, HStack, VStack, Grid, Box, Center } from "@/components/layout";
+
+<HStack gap="md">
+  <Box flex="1">Content</Box>
+  <Box>Sidebar</Box>
+</HStack>
+```
+
+These are Panda CSS JSX components — they accept all style props directly.
+
+---
+
+## Route Patterns
+
+### Root route (`__root.tsx`)
+HTML shell, global providers (QueryClient, ToastProvider), global styles.
+
+### Layout routes (pathless)
+`_app.tsx` wraps all app pages. Use for shared header/sidebar/footer.
+For protected routes, create `_authed.tsx` with a `beforeLoad` redirect:
+
+```tsx
+export const Route = createFileRoute("/_authed")({
+  beforeLoad({ context }) {
+    if (!context.session?.user) {
+      throw redirect({ to: "/login" });
+    }
+  },
+  component: AuthedLayout,
+});
+```
+
+### Server-only imports in routes
+Use dynamic imports in `beforeLoad`/`loader` to avoid bundling server code into the client:
+```tsx
+beforeLoad: async () => {
+  const { getServerEnv } = await import("@/lib/serverEnv");
+  const env = await getServerEnv();
+}
+```
+
+### API routes
+```tsx
+export const Route = createFileRoute("/api/my-endpoint")({
+  server: {
+    handlers: {
+      async GET() { return new Response(JSON.stringify({ ok: true })); },
+      async POST({ request }) { /* ... */ },
+    },
+  },
+});
+```
+
+---
+
+## Environment Variables
+
+### Client-side (`VITE_*`)
+```tsx
+import { env } from "@/lib/env";
+console.log(env.VITE_APP_URL);
+```
+Set in `wrangler.jsonc` `vars` or `.env` locally. Bundled into client JS — **never put secrets here**.
+
+### Server-side (secrets)
+```tsx
+import { getServerEnv } from "@/lib/serverEnv";
+
+// MUST be called inside a request handler
+const env = await getServerEnv();
+```
+Set via `bunx wrangler secret put` or `.dev.vars` locally. Never accessible from client.
+
+---
+
+## Testing
+
+### Running tests
+```bash
+bun run test              # Watch mode
+bun run test -- --run     # Single run
+```
+
+### Component test pattern
+```tsx
+// @vitest-environment happy-dom
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { Button } from "./Button";
+
+describe("Button", () => {
+  it("renders children", () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByRole("button", { name: "Click me" })).toBeDefined();
+  });
+});
+```
+
+Use `@vitest-environment happy-dom` directive for TSX tests that need a DOM.
+
+---
+
+## Deployment
+
+```bash
+bun run build     # Build for production
+bun run deploy    # Deploy to Cloudflare Workers
+```
+
+See `docs/deployment.md` for custom domains, secrets, and smart placement.
+
+---
 
 ## Recipes
 
-The `recipes/` directory contains opt-in integrations. To use one:
+The `recipes/` directory contains drop-in patterns:
 
-1. Read its `README.md` for what it provides
-2. Copy the files into your `src/` tree
-3. Install its additional dependencies (listed in README)
-4. Follow the integration guide
+- **auth/** — OTP verification + dual-token sessions
+- **authoring/** — Markdown rendering + TipTap rich text editor
+- **convex/** — Convex real-time database integration
+- **analytics/** — PostHog scaffolding
+- **storybook/** — Storybook configuration
 
-Recipes are designed to be copied, not imported. They become your code.
+Each recipe has its own README with setup instructions and required dependencies.
 
-## Development
+---
 
-```bash
-bun install
-bun run dev          # Start dev server (port 3000)
-bun run build        # Production build
-bun run test         # Run tests
-bun run typecheck    # Type checking
-bun run deploy       # Build + deploy to CF Workers
-```
+## Anti-Patterns
 
-## Tools
-
-### Recommended for AI-assisted development
-- **qmd** — if available, use for fast codebase context gathering
-- **ast-grep** — if available, use for structural search/replace across the codebase
-  - Prefer ast-grep over regex for refactoring (type-aware, respects AST boundaries)
-  - Example: `sg -p 'styled($COMP)' --lang tsx` to find anti-pattern usage
-
-### Planning Strategy
-When making changes:
-1. Read this file + relevant recipe READMEs first
-2. Check `docs/` for architecture decisions
-3. Plan before coding — write the approach in a comment or PR description
-4. Small, atomic commits (one concern per commit)
-5. Run `bun run typecheck && bun run test` before pushing
-
-### Documentation Strategy
-- Architecture decisions → `docs/decisions/` (ADR format)
-- Component API → Storybook stories (if recipe installed)
-- Integration patterns → recipe READMEs
-- Keep CLAUDE.md updated when conventions change
+❌ **No nested interactive elements** — never put `<Button>` inside `<Link>` or `<a>` inside `<button>`
+❌ **No `styled()` API** — use `css()` and `cva()` only
+❌ **No arbitrary z-index** — only `-1`, `0`, `1`
+❌ **No `process.env` in Workers** — use `getServerEnv()` for server secrets, `import.meta.env` for client vars
+❌ **No `any` types** — unless justified with a comment explaining why
+❌ **No server imports at module level in routes** — use dynamic `import()` in `beforeLoad`/`loader`
