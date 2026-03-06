@@ -28,4 +28,4 @@ bun add @convex-dev/prosemirror-sync
 1. Copy components into your preferred location (e.g., `src/components/markdown/`)
 2. Install dependencies
 3. Import and use — no provider setup needed for standalone mode
-4. For collaborative sync, set up Convex ProseMirror (see HomeHub's `convex/prosemirrorSync.ts`)
+4. For collaborative sync, set up Convex ProseMirror (see your project's Convex sync setup)

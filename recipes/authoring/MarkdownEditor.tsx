@@ -2,7 +2,7 @@
  * TipTap Rich Text Editor
  *
  * Client-only component. Adapt the sync mechanism to your backend.
- * The HomeHub version uses @convex-dev/prosemirror-sync — replace with
+ * The original version uses @convex-dev/prosemirror-sync — replace with
  * your own persistence layer.
  */
 import { forwardRef, useEffect, useState, type ComponentProps } from "react";

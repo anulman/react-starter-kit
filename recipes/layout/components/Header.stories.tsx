@@ -13,14 +13,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { children: "HomeHub" },
+  args: { children: "My App" },
 };
 
 export const WithNavigation: Story = {
   args: {
     children: (
       <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-        <span>HomeHub</span>
+        <span>My App</span>
         <nav style={{ display: "flex", gap: "1rem" }}>
           <a href="#">Home</a>
           <a href="#">Settings</a>
