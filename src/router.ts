@@ -22,6 +22,7 @@ export async function getRouter() {
   const router = createRouter({
     routeTree,
     scrollRestoration: true,
+    defaultPreload: "intent",
     defaultErrorComponent: DefaultErrorComponent,
     defaultNotFoundComponent: DefaultNotFound,
     context: {
@@ -34,6 +35,6 @@ export async function getRouter() {
 
 declare module "@tanstack/react-router" {
   interface Register {
-    router: ReturnType<typeof getRouter>;
+    router: Awaited<ReturnType<typeof getRouter>>;
   }
 }

@@ -66,5 +66,5 @@ reducing latency for data-heavy operations.
 ## Environment Variables
 
 - **Client (VITE_*)**: Set in `wrangler.jsonc` `vars` — bundled into client JS
-- **Server secrets**: Set via `wrangler secret put` — only available in server functions via `getServerEnv()`
-- **Never use `process.env`** in Workers — it doesn't exist. Use `getServerEnv()`.
+- **Server secrets**: Set via `wrangler secret put` — only available in server functions via `ENV` from `@/lib/serverEnv`
+- **Never use `process.env`** in Workers — it doesn't exist. Use `ENV` from varlock.

@@ -108,7 +108,7 @@ export const APIRoute = createAPIFileRoute("/api/{name}")({
     const { getRequestHeader } = await import("@tanstack/react-start/server");
   }
   ```
-- **Don't use `process.env`** in server functions -- use `getServerEnv()`
+- **Don't use `process.env`** in server functions -- use `ENV` from `@/lib/serverEnv`
 - **Layout routes (`_name.tsx`) don't render pages** -- they render `<Outlet />`
 - **Pathless layout routes** group related pages without adding URL segments
 - **Error handling**: Route-level `errorComponent` overrides the global default from `ErrorBoundary.tsx`

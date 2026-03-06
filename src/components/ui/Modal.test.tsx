@@ -49,9 +49,7 @@ describe("Modal", () => {
         <p>content</p>
       </Modal>
     );
-    // base-ui adds focus guard buttons; find the actual close button inside the dialog
-    const dialog = screen.getByRole("dialog");
-    const closeBtn = dialog.querySelector("button")!;
+    const closeBtn = screen.getByRole("button", { name: "Close" });
     closeBtn.click();
     expect(onOpenChange).toHaveBeenCalledWith(false);
     expect(onClose).toHaveBeenCalled();

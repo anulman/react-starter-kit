@@ -86,6 +86,11 @@ export default defineConfig({
       xl: "1280px",
       "2xl": "1536px",
     },
+    // Semantic tokens: adaptive colors that change between light and dark mode.
+    // bg, fg, stroke — layout colors (always adaptive)
+    // primary, success, warning, danger — status colors (adaptive, slightly brighter in dark mode)
+    // text.faded — de-emphasized text (adaptive, avoids hex+alpha for dark mode compatibility)
+    // Raw tokens (background, surface, border, text.*, etc.) stay constant and are used as base values.
     semanticTokens: {
       colors: {
         bg: {
@@ -104,8 +109,29 @@ export default defineConfig({
             value: { base: "{colors.text.muted}", _dark: "#a0a0a0" },
           },
         },
-        "border.semantic": {
+        stroke: {
           value: { base: "{colors.border}", _dark: "#2a2a2a" },
+        },
+        // Interactive / status colors — adjusted for dark backgrounds
+        primary: {
+          DEFAULT: {
+            value: { base: "{colors.primary}", _dark: "#3b9eff" },
+          },
+          hover: {
+            value: { base: "{colors.primary.hover}", _dark: "#66b3ff" },
+          },
+        },
+        success: {
+          value: { base: "{colors.success}", _dark: "#34d058" },
+        },
+        warning: {
+          value: { base: "{colors.warning}", _dark: "#ffd33d" },
+        },
+        danger: {
+          value: { base: "{colors.danger}", _dark: "#f85149" },
+        },
+        "text.faded": {
+          value: { base: "{colors.text.faded}", _dark: "#808080" },
         },
       },
     },

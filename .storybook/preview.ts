@@ -13,7 +13,8 @@ const preview: Preview = {
     },
     layout: "centered",
     a11y: {
-      // Enable automated a11y checks on all stories
+      // a11y automated testing disabled — axe-core produces false positives
+      // with Panda CSS atomic classes. Run manual a11y audits instead.
       test: "todo",
     },
   },

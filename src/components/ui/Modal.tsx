@@ -2,43 +2,12 @@ import type { ReactNode } from "react";
 import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
 import { css } from "styled-system/css";
 import { CloseIcon } from "@/components/icons";
-
-const backdropStyles = css({
-  position: "fixed",
-  inset: 0,
-  bg: "rgba(0, 0, 0, 0.5)",
-  zIndex: 1,
-});
-
-const popupStyles = css({
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bg: "bg",
-  borderRadius: "md",
-  boxShadow: "lg",
-  p: "lg",
-  width: { base: "90vw", sm: "auto" },
-  minWidth: { base: "auto", sm: "400px", md: "720px" },
-  maxWidth: "90vw",
-  maxHeight: "90vh",
-  overflow: "auto",
-  zIndex: 1,
-});
-
-const titleStyles = css({
-  fontSize: "lg",
-  fontWeight: "semibold",
-  color: "fg",
-  marginBottom: "xs",
-});
-
-const descriptionStyles = css({
-  fontSize: "md",
-  color: "fg.muted",
-  marginBottom: "md",
-});
+import {
+  backdropStyles,
+  modalPopupStyles,
+  titleStyles,
+  descriptionStyles,
+} from "./dialogStyles";
 
 const closeButtonStyles = css({
   position: "absolute",
@@ -78,9 +47,9 @@ export function Modal({
     <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
       <BaseDialog.Portal>
         <BaseDialog.Backdrop className={backdropStyles} />
-        <BaseDialog.Popup className={popupStyles}>
+        <BaseDialog.Popup className={modalPopupStyles}>
           {showCloseButton && (
-            <BaseDialog.Close className={closeButtonStyles}>
+            <BaseDialog.Close className={closeButtonStyles} aria-label="Close">
               <CloseIcon size={20} />
             </BaseDialog.Close>
           )}

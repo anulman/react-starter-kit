@@ -4,7 +4,7 @@ const spinnerRecipe = cva({
   base: {
     display: "inline-block",
     borderRadius: "full",
-    borderWidth: "2px", borderStyle: "solid", borderColor: "border.semantic",
+    borderWidth: "2px", borderStyle: "solid", borderColor: "stroke",
     borderTopColor: "primary",
     animation: "spin 0.8s linear infinite",
   },

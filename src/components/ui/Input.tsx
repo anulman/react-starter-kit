@@ -12,7 +12,7 @@ const inputRecipe = cva({
   base: {
     width: "100%",
     borderRadius: "sm",
-    borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+    borderWidth: "1px", borderStyle: "solid", borderColor: "stroke",
     bg: "bg",
     color: "fg",
     transition: "border-color 150ms, box-shadow 150ms",

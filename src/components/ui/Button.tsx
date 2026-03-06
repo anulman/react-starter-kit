@@ -34,7 +34,7 @@ const buttonRecipe = cva({
       secondary: {
         bg: "bg.surface",
         color: "fg",
-        borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+        borderWidth: "1px", borderStyle: "solid", borderColor: "stroke",
         _hover: {
           bg: "bg",
           borderColor: "text.muted",

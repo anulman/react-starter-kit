@@ -29,6 +29,8 @@ function RootComponent() {
   return (
     <RootDocument>
       <QueryClientProvider client={queryClient}>
+        {/* ToastProvider must be inside QueryClientProvider and render after
+            other providers so toasts appear above modals (z-index: 1, DOM order). */}
         <ToastProvider>
           <tsr.Outlet />
         </ToastProvider>

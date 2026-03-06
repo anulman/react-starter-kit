@@ -94,14 +94,14 @@ import * as ui from "@/components/ui";
 import { useToast } from "@/components/ui";
 
 function MyComponent() {
-  const toast = useToast();
+  const { toast } = useToast();
 
   const handleSave = async () => {
     try {
       await save();
-      toast.success("Saved!");
+      toast({ message: "Saved!", variant: "success" });
     } catch {
-      toast.error("Something went wrong");
+      toast({ message: "Something went wrong", variant: "error" });
     }
   };
 }
@@ -167,8 +167,8 @@ import { z } from "zod";
 export const getItems = createServerFn({ method: "GET" })
   .handler(async () => {
     // Runs on the server (CF Worker)
-    // Access server env via getServerEnv(), NOT process.env
-    const { API_KEY } = getServerEnv();
+    // Access server env via ENV from varlock, NOT process.env
+    const { API_KEY } = ENV;
     return fetch("https://api.example.com/items", {
       headers: { Authorization: `Bearer ${API_KEY}` },
     }).then(r => r.json());
@@ -183,8 +183,8 @@ import { env } from "@/lib/env";
 const apiUrl = env.VITE_API_URL;
 
 // Server-side (inside request handlers only  --  not at module top level)
-import { getServerEnv } from "@/lib/serverEnv";
-const { SECRET_KEY } = getServerEnv();
+import { ENV } from "@/lib/serverEnv";
+const { SECRET_KEY } = ENV;
 ```
 
 For local dev, create `.dev.vars`:
@@ -322,7 +322,7 @@ bun run deploy       # Deploy to Cloudflare Workers
 │   │   └── icons/        # Minimal icon set (7 icons)
 │   ├── lib/
 │   │   ├── env.ts        # Client env helper
-│   │   └── serverEnv.ts  # Server env helper (Workers-safe)
+│   │   └── serverEnv.ts  # Server env (re-exports varlock ENV)
 │   ├── routes/           # File-based routing (TanStack Start)
 │   ├── styles/
 │   │   └── global.css    # Global styles + Panda CSS layers

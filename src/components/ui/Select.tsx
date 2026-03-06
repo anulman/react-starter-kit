@@ -12,7 +12,7 @@ const triggerRecipe = cva({
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: "sm",
-    borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+    borderWidth: "1px", borderStyle: "solid", borderColor: "stroke",
     bg: "bg",
     color: "fg",
     cursor: "pointer",
@@ -56,7 +56,7 @@ const positionerStyles = css({ zIndex: 1 });
 
 const popupStyles = css({
   bg: "bg",
-  borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+  borderWidth: "1px", borderStyle: "solid", borderColor: "stroke",
   borderRadius: "sm",
   boxShadow: "md",
   py: "xs",

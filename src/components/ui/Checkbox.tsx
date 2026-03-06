@@ -9,7 +9,7 @@ const checkboxRecipe = cva({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "sm",
-    borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+    borderWidth: "1px", borderStyle: "solid", borderColor: "stroke",
     bg: "bg",
     cursor: "pointer",
     transition: "background-color 150ms, border-color 150ms",

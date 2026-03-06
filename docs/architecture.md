@@ -45,10 +45,10 @@ import * as ui from "@/components/ui";
 - No naming conflicts with domain components
 - Easy to grep for UI component usage
 
-### Server env via `getServerEnv()` — not `process.env`
+### Server env via varlock `ENV` — not `process.env`
 - Cloudflare Workers don't have `process.env`
 - Worker bindings are request-scoped, accessed via `cloudflare:workers`
-- `getServerEnv()` abstracts this, works in both Workers and Node.js (tests)
+- `ENV` from varlock (re-exported via `@/lib/serverEnv`) provides validated, type-safe access
 
 ### Session computed once at router mount
 - Session is stable for the page session — no mid-navigation auth flickers

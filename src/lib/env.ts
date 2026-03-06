@@ -4,7 +4,7 @@
  * For VITE_* prefixed variables safe to expose to the browser.
  * Schema and validation defined in .env.schema (via varlock).
  *
- * For server-side secrets, use: import { getServerEnv } from "@/lib/serverEnv"
+ * For server-side secrets, use: import { ENV } from "@/lib/serverEnv"
  */
 
 interface ClientEnvironment {

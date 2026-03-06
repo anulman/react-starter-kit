@@ -34,7 +34,7 @@ const toastRecipe = cva({
       default: {
         bg: "bg",
         color: "fg",
-        borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+        borderWidth: "1px", borderStyle: "solid", borderColor: "stroke",
       },
       success: { bg: "success", color: "white" },
       error: { bg: "danger", color: "white" },

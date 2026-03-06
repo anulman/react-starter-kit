@@ -26,7 +26,7 @@ bun run deploy           # Deploy to Cloudflare Workers
 | Icons | `src/components/icons/` |
 | Routes | `src/routes/` |
 | Client env | `src/lib/env.ts` |
-| Server env | `src/lib/serverEnv.ts` |
+| Server env | `src/lib/serverEnv.ts` (re-exports varlock `ENV`) |
 | Theme tokens | `panda.config.ts` |
 | Global CSS | `src/styles/global.css` |
 | Drop-in recipes | `recipes/` |
@@ -73,8 +73,8 @@ import * as ui from "@/components/ui";
 ```
 Clear provenance. No naming conflicts. Easy to grep.
 
-### Server env via `getServerEnv()`
-Cloudflare Workers don't have `process.env`. Worker bindings are request-scoped. `getServerEnv()` abstracts this for both Workers and Node.js (tests).
+### Server env via varlock `ENV`
+Cloudflare Workers don't have `process.env`. Worker bindings are request-scoped. `ENV` from varlock (re-exported via `@/lib/serverEnv`) provides validated, type-safe access.
 
 ---
 
@@ -218,8 +218,8 @@ export const Route = createFileRoute("/_authed")({
 Use dynamic imports in `beforeLoad`/`loader` to avoid bundling server code into the client:
 ```tsx
 beforeLoad: async () => {
-  const { getServerEnv } = await import("@/lib/serverEnv");
-  const env = await getServerEnv();
+  const { ENV } = await import("@/lib/serverEnv");
+  const apiKey = ENV.API_KEY;
 }
 ```
 
@@ -248,10 +248,10 @@ Set in `wrangler.jsonc` `vars` or `.env` locally. Bundled into client JS — **n
 
 ### Server-side (secrets)
 ```tsx
-import { getServerEnv } from "@/lib/serverEnv";
+import { ENV } from "@/lib/serverEnv";
 
-// MUST be called inside a request handler
-const env = await getServerEnv();
+// Access validated env vars directly
+const apiKey = ENV.API_KEY;
 ```
 Set via `bunx wrangler secret put` or `.dev.vars` locally. Never accessible from client.
 
@@ -314,7 +314,7 @@ Each recipe has its own README with setup instructions and required dependencies
 ❌ **No nested interactive elements** — never put `<Button>` inside `<Link>` or `<a>` inside `<button>`
 ❌ **No `styled()` API** — use `css()` and `cva()` only
 ❌ **No arbitrary z-index** — only `-1`, `0`, `1`
-❌ **No `process.env` in Workers** — use `getServerEnv()` for server secrets, `import.meta.env` for client vars
+❌ **No `process.env` in Workers** — use `ENV` from `@/lib/serverEnv` for server secrets, `import.meta.env` for client vars
 ❌ **No `any` types** — unless justified with a comment explaining why
 ❌ **No server imports at module level in routes** — use dynamic `import()` in `beforeLoad`/`loader`
 

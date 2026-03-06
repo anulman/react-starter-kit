@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { userEvent, within, expect, waitFor, fn } from "@storybook/test";
-import { ConfirmDialog } from "./Dialog";
+import { ConfirmDialog } from "./ConfirmDialog";
 import { Button } from "./Button";
 
 const meta = {
