@@ -128,20 +128,20 @@ export default defineConfig({
             value: { base: "{colors.primary}", _dark: "#3b9eff" },
           },
           hover: {
-            value: { base: "{colors.primary.hover}", _dark: "#66b3ff" },
+            value: { base: "#0056b3", _dark: "#66b3ff" },
           },
         },
         success: {
-          value: { base: "{colors.success}", _dark: "#34d058" },
+          value: { base: "#28a745", _dark: "#34d058" },
         },
         warning: {
-          value: { base: "{colors.warning}", _dark: "#ffd33d" },
+          value: { base: "#ffc107", _dark: "#ffd33d" },
         },
         danger: {
-          value: { base: "{colors.danger}", _dark: "#f85149" },
+          value: { base: "#dc3545", _dark: "#f85149" },
         },
         "text.faded": {
-          value: { base: "{colors.text.faded}", _dark: "#808080" },
+          value: { base: "#666666aa", _dark: "#808080" },
         },
         overlay: {
           value: { base: "rgba(0, 0, 0, 0.5)", _dark: "rgba(0, 0, 0, 0.7)" },
