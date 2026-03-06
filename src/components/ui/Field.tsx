@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes, type InputHTMLAttributes, type LabelHTMLAttributes, type TextareaHTMLAttributes } from "react";
+import { type HTMLAttributes, type InputHTMLAttributes, type LabelHTMLAttributes, type TextareaHTMLAttributes, type Ref } from "react";
 import { Input as BaseInput } from "@base-ui-components/react/input";
 import { css, cx, type RecipeVariantProps } from "styled-system/css";
 import { labelRecipe, errorRecipe } from "./fieldStyles";
@@ -75,19 +75,19 @@ export { inputRecipe };
 
 type InputVariants = RecipeVariantProps<typeof inputRecipe>;
 
-type FieldInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> & InputVariants;
+type FieldInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> & InputVariants & {
+  ref?: Ref<HTMLInputElement>;
+};
 
-const FieldInput = forwardRef<HTMLInputElement, FieldInputProps>(
-  function FieldInput({ size, hasError, className, ...props }, ref) {
-    return (
-      <BaseInput
-        ref={ref}
-        className={cx(inputRecipe({ size, hasError }), className)}
-        {...props}
-      />
-    );
-  }
-);
+function FieldInput({ size, hasError, className, ref, ...props }: FieldInputProps) {
+  return (
+    <BaseInput
+      ref={ref}
+      className={cx(inputRecipe({ size, hasError }), className)}
+      {...props}
+    />
+  );
+}
 
 // --- Field.TextArea ---
 
@@ -137,19 +137,19 @@ export { textAreaRecipe };
 
 type TextAreaVariants = RecipeVariantProps<typeof textAreaRecipe>;
 
-type FieldTextAreaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> & TextAreaVariants;
+type FieldTextAreaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "size"> & TextAreaVariants & {
+  ref?: Ref<HTMLTextAreaElement>;
+};
 
-const FieldTextArea = forwardRef<HTMLTextAreaElement, FieldTextAreaProps>(
-  function FieldTextArea({ size, hasError, className, ...props }, ref) {
-    return (
-      <textarea
-        ref={ref}
-        className={cx(textAreaRecipe({ size, hasError }), className)}
-        {...props}
-      />
-    );
-  }
-);
+function FieldTextArea({ size, hasError, className, ref, ...props }: FieldTextAreaProps) {
+  return (
+    <textarea
+      ref={ref}
+      className={cx(textAreaRecipe({ size, hasError }), className)}
+      {...props}
+    />
+  );
+}
 
 // --- Field.Error ---
 

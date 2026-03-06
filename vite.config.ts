@@ -22,6 +22,8 @@ export default defineConfig({
       "use-sync-external-store/shim/with-selector.js": "use-sync-external-store",
     },
   },
+  // Required: TanStack Start uses virtual modules (#tanstack-router-entry, #tanstack-start-entry)
+  // that break Vite's dep optimizer. Excluding these packages prevents pre-bundling errors.
   optimizeDeps: {
     exclude: ["@tanstack/react-start", "@tanstack/start-server-core"],
   },

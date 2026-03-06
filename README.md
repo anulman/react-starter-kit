@@ -29,16 +29,16 @@ bun run dev
 |-------|--------|-----|
 | **Framework** | [TanStack Start](https://tanstack.com/start) | File-based routing, SSR, server functions |
 | **Runtime** | [Bun](https://bun.sh) | Fast installs, native TypeScript |
-| **Styling** | [Panda CSS](https://panda-css.com) | Zero-runtime, type-safe tokens, atomic CSS |
+| **Styling** | [Panda CSS](https://panda-css.com) | Near-zero-runtime — styles generated at build time, with minimal JS for class name resolution |
 | **Components** | [BaseUI](https://base-ui.com) | Headless accessible primitives |
 | **Deployment** | [Cloudflare Workers](https://workers.cloudflare.com) | Edge SSR via `@cloudflare/vite-plugin` |
 | **Testing** | [Vitest](https://vitest.dev) | Vite-native, fast |
 
 ## What's Included
 
-### 13 Core Components
+### 14 Core Components
 
-All follow the same pattern: BaseUI primitive -> Panda CSS `cva()` recipe -> typed props -> `forwardRef`.
+All follow the same pattern: BaseUI primitive → Panda CSS `cva()` recipe → typed props → `ref` as a regular prop (React 19).
 
 ```tsx
 import * as ui from "@/components/ui";
@@ -177,7 +177,7 @@ export const getItems = createServerFn({ method: "GET" })
 
 ### Environment Variables
 
-Environment validation is handled entirely by [varlock](https://varlock.dev) via `.env.schema`. Add `@required`, `@type`, `@sensitive` decorators to define your schema. Varlock validates on load and fails fast with clear errors. Do not add manual validation wrappers.
+Environment validation is handled by [varlock](https://varlock.dev) via `.env.schema`. The included schema is scaffolded — expand for your project. Add `@required`, `@type`, `@sensitive` decorators to define your schema. Varlock validates on load and fails fast with clear errors.
 
 ```tsx
 // Client-side (must be prefixed with VITE_)

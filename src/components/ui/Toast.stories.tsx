@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { userEvent, within, expect } from "@storybook/test";
+import { userEvent, within, expect } from "storybook/test";
 import { useToast, ToastProvider } from "./ToastProvider";
 import { Button } from "./Button";
 

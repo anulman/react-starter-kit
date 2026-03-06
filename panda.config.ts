@@ -3,6 +3,8 @@ import { defineConfig } from "@pandacss/dev";
 export default defineConfig({
   preflight: true,
   include: ["./src/**/*.{js,jsx,ts,tsx}"],
+  // lib/ excluded intentionally — utility modules should not contain css()/cva() calls.
+  // If you need styles in a lib file, move it to components/ or add the path here.
   exclude: ["./src/lib/**"],
   jsxFramework: "react",
   outdir: "styled-system",
@@ -13,6 +15,14 @@ export default defineConfig({
   },
 
   theme: {
+    extend: {
+      keyframes: {
+        slideIn: {
+          from: { transform: "translateX(100%)", opacity: "0" },
+          to: { transform: "translateX(0)", opacity: "1" },
+        },
+      },
+    },
     tokens: {
       colors: {
         background: { value: "#ffffff" },

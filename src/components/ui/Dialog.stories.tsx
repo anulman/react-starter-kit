@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { userEvent, within, expect, waitFor, fn } from "@storybook/test";
+import { userEvent, within, expect, waitFor, fn } from "storybook/test";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { Button } from "./Button";
 

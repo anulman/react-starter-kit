@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes } from "react";
+import { type HTMLAttributes, type Ref } from "react";
 import { cx, cva, type RecipeVariantProps } from "styled-system/css";
 
 const badgeRecipe = cva({
@@ -29,16 +29,16 @@ const badgeRecipe = cva({
 
 type BadgeVariants = RecipeVariantProps<typeof badgeRecipe>;
 
-export type BadgeProps = HTMLAttributes<HTMLSpanElement> & BadgeVariants;
+export type BadgeProps = HTMLAttributes<HTMLSpanElement> & BadgeVariants & {
+  ref?: Ref<HTMLSpanElement>;
+};
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
-  function Badge({ variant, size, className, ...props }, ref) {
-    return (
-      <span
-        ref={ref}
-        className={cx(badgeRecipe({ variant, size }), className)}
-        {...props}
-      />
-    );
-  }
-);
+export function Badge({ variant, size, className, ref, ...props }: BadgeProps) {
+  return (
+    <span
+      ref={ref}
+      className={cx(badgeRecipe({ variant, size }), className)}
+      {...props}
+    />
+  );
+}

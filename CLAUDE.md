@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-React starter kit built on **TanStack Start** deployed to **Cloudflare Workers**. Uses **Panda CSS** for zero-runtime styling and **BaseUI** for accessible headless components.
+React starter kit built on **TanStack Start** deployed to **Cloudflare Workers**. Uses **Panda CSS** for near-zero-runtime styling and **BaseUI** for accessible headless components.
 
 **Stack**: Bun · TanStack Start · React 19 · Panda CSS · BaseUI · Vitest · Cloudflare Workers
 
@@ -43,7 +43,7 @@ If available, use `qmd` for quick file reading and `ast-grep` for structural cod
 SSR on the edge. File-based routing with type-safe params. Server functions that colocate with components. Cloudflare Workers for global distribution with smart placement.
 
 ### Why Panda CSS (not Tailwind)
-- **Zero-runtime** — CSS generated at build time, no JS shipped for styles
+- **Near-zero-runtime** — styles generated at build time, with minimal JS for class name resolution
 - **Type-safe tokens** — typos are compile errors, not silent bugs
 - **`cva()` recipes** — variant API for components, cleaner than className concatenation
 - Same DX as Tailwind (utility-first) but with type safety
@@ -79,10 +79,6 @@ Cloudflare Workers don't have `process.env`. Worker bindings are request-scoped.
 ---
 
 ## Component Creation Guide
-
-> **React 19 note:** `forwardRef` is technically legacy in React 19 — refs can be passed
-> as regular props. The existing components use `forwardRef` for broad compatibility.
-> When creating new components, you may pass `ref` as a prop directly instead.
 
 ### Adding a new UI component
 
@@ -120,7 +116,7 @@ import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
 
 4. **Export from barrel** — add to `src/components/ui/index.ts`
 5. **Accept `className` prop** for composition
-6. **Use `forwardRef`** for DOM-element components
+6. **Accept `ref` as a regular prop** (React 19 — no `forwardRef` needed)
 
 ### Adding a new icon
 
@@ -247,9 +243,9 @@ export const Route = createFileRoute("/api/my-endpoint")({
 
 ## Environment Variables
 
-> **Environment validation is handled by varlock via `.env.schema`.** Add `@required`,
-> `@type`, `@sensitive` decorators to define your schema. Varlock validates on load and
-> fails fast with clear errors. Do not add manual validation wrappers around env access.
+> **Environment validation is handled by varlock via `.env.schema`.** The included schema
+> is scaffolded — expand for your project. Add `@required`, `@type`, `@sensitive` decorators
+> to define your schema. Varlock validates on load and fails fast with clear errors.
 
 ### Client-side (`VITE_*`)
 ```tsx

@@ -1,4 +1,4 @@
-import { forwardRef, useId } from "react";
+import { useId, type Ref } from "react";
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
 import { css, cx, cva, type RecipeVariantProps } from "styled-system/css";
 import { CheckIcon } from "@/components/icons";
@@ -68,13 +68,12 @@ export type CheckboxProps = {
   value?: string;
   id?: string;
   className?: string;
+  ref?: Ref<HTMLButtonElement>;
 } & CheckboxVariants;
 
-export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
-  function Checkbox(
-    { label, size, className, id: providedId, checked, defaultChecked, onCheckedChange, disabled, name, value },
-    ref
-  ) {
+export function Checkbox({
+  label, size, className, id: providedId, checked, defaultChecked, onCheckedChange, disabled, name, value, ref,
+}: CheckboxProps) {
     const generatedId = useId();
     const id = providedId ?? generatedId;
 
@@ -102,5 +101,4 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
         )}
       </div>
     );
-  }
-);
+}

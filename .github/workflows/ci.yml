@@ -32,6 +32,9 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
+      - name: Typecheck tests
+        run: tsc --noEmit -p tsconfig.test.json
+
       - name: Test
         run: bun run test --run
 

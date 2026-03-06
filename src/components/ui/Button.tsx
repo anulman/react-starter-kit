@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef } from "react";
+import { type ComponentPropsWithoutRef, type Ref } from "react";
 import { Button as BaseButton } from "@base-ui-components/react/button";
 import { cx, cva, type RecipeVariantProps } from "styled-system/css";
 import { LoadingSpinner } from "./LoadingSpinner";
@@ -87,6 +87,7 @@ type ButtonVariants = RecipeVariantProps<typeof buttonRecipe>;
 export type ButtonProps = ComponentPropsWithoutRef<typeof BaseButton> &
   ButtonVariants & {
     loading?: boolean;
+    ref?: Ref<HTMLButtonElement>;
   };
 
 const spinnerSizeMap = {
@@ -95,20 +96,18 @@ const spinnerSizeMap = {
   lg: "sm",
 } as const;
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button({ variant, size = "md", className, loading, disabled, children, ...props }, ref) {
-    const isDisabled = disabled || loading;
+export function Button({ variant, size = "md", className, loading, disabled, children, ref, ...props }: ButtonProps) {
+  const isDisabled = disabled || loading;
 
-    return (
-      <BaseButton
-        ref={ref}
-        disabled={isDisabled}
-        className={cx(buttonRecipe({ variant, size }), typeof className === "string" ? className : undefined)}
-        {...props}
-      >
-        {loading && <LoadingSpinner size={spinnerSizeMap[size]} label="Loading" />}
-        {children}
-      </BaseButton>
-    );
-  }
-);
+  return (
+    <BaseButton
+      ref={ref}
+      disabled={isDisabled}
+      className={cx(buttonRecipe({ variant, size }), typeof className === "string" ? className : undefined)}
+      {...props}
+    >
+      {loading && <LoadingSpinner size={spinnerSizeMap[size]} label="Loading" />}
+      {children}
+    </BaseButton>
+  );
+}

@@ -1,4 +1,4 @@
-import { forwardRef, type InputHTMLAttributes, type HTMLAttributes, useId } from "react";
+import { type InputHTMLAttributes, type HTMLAttributes, type Ref, useId } from "react";
 import { cx, type RecipeVariantProps } from "styled-system/css";
 import { Field, inputRecipe } from "./Field";
 
@@ -9,12 +9,12 @@ export type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> &
     label?: string;
     error?: string;
     containerProps?: HTMLAttributes<HTMLDivElement>;
+    ref?: Ref<HTMLInputElement>;
   };
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  { label, error, size, className, containerProps, id: providedId, ...props },
-  ref
-) {
+export function Input({
+  label, error, size, className, containerProps, id: providedId, ref, ...props
+}: InputProps) {
   const generatedId = useId();
   const id = providedId ?? generatedId;
   const errorId = `${id}-error`;
@@ -43,4 +43,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       )}
     </Field.Root>
   );
-});
+}

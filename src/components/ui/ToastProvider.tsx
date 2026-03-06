@@ -4,6 +4,7 @@ import {
   useState,
   useCallback,
   useRef,
+  useEffect,
   type ReactNode,
 } from "react";
 import { css, cva } from "styled-system/css";
@@ -89,19 +90,38 @@ export function ToastProvider({ children, duration = 5000 }: ToastProviderProps)
   const [toasts, setToasts] = useState<Toast[]>([]);
   const durationRef = useRef(duration);
   durationRef.current = duration;
+  const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
+
+  // Clear all timeouts on unmount
+  useEffect(() => {
+    const timeouts = timeoutsRef.current;
+    return () => {
+      for (const timeout of timeouts.values()) {
+        clearTimeout(timeout);
+      }
+      timeouts.clear();
+    };
+  }, []);
 
   const toast = useCallback(
     (input: ToastInput) => {
       const id = Math.random().toString(36).slice(2);
       setToasts((prev) => [...prev, { ...input, id }]);
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
+        timeoutsRef.current.delete(id);
         setToasts((prev) => prev.filter((t) => t.id !== id));
       }, durationRef.current);
+      timeoutsRef.current.set(id, timeout);
     },
     []
   );
 
   const dismiss = useCallback((id: string) => {
+    const timeout = timeoutsRef.current.get(id);
+    if (timeout) {
+      clearTimeout(timeout);
+      timeoutsRef.current.delete(id);
+    }
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
