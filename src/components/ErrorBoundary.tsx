@@ -14,7 +14,7 @@
  *     defaultNotFoundComponent: DefaultNotFound,
  *   });
  */
-import { useRouter, type ErrorComponentProps } from "@tanstack/react-router";
+import { type ErrorComponentProps } from "@tanstack/react-router";
 import { css } from "styled-system/css";
 import * as ui from "@/components/ui";
 
@@ -81,7 +81,6 @@ export function DefaultErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export function DefaultNotFound() {
-  const router = useRouter();
 
   return (
     <div className={containerStyles}>
@@ -89,7 +88,7 @@ export function DefaultNotFound() {
       <p className={messageStyles}>
         The page you're looking for doesn't exist or has been moved.
       </p>
-      <ui.Button onClick={() => router.navigate({ to: "/" })} variant="primary">
+      <ui.Button onClick={() => window.location.assign("/")} variant="primary">
         Go home
       </ui.Button>
     </div>

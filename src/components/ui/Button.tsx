@@ -103,7 +103,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <BaseButton
         ref={ref}
         disabled={isDisabled}
-        className={cx(buttonRecipe({ variant, size }), className)}
+        className={cx(buttonRecipe({ variant, size }), typeof className === "string" ? className : undefined)}
         {...props}
       >
         {loading && <LoadingSpinner size={spinnerSizeMap[size]} label="Loading" />}
