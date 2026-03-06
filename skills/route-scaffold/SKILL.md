@@ -84,18 +84,25 @@ Then nest pages under `src/routes/_authed/`.
 Create `src/routes/api/{name}.ts`:
 
 ```tsx
-import { createAPIFileRoute } from "@tanstack/react-start/api";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const APIRoute = createAPIFileRoute("/api/{name}")({
-  GET: async ({ request }) => {
-    return Response.json({ ok: true });
-  },
-  POST: async ({ request }) => {
-    const body = await request.json();
-    return Response.json({ received: body });
+export const Route = createFileRoute("/api/{name}")({
+  server: {
+    handlers: {
+      async GET() {
+        return Response.json({ ok: true });
+      },
+      async POST({ request }) {
+        const body = await request.json();
+        return Response.json({ received: body });
+      },
+    },
   },
 });
 ```
+
+> **Note:** `createAPIFileRoute` does not exist in TanStack Start v1.145+.
+> The correct pattern for pure API routes is `createFileRoute` with `server.handlers`.
 
 ### Page with Typed Search Params
 
