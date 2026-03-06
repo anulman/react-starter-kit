@@ -15,7 +15,8 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          # Pin bun version for reproducible builds. Update periodically.
+          bun-version: "1.3.10"
 
       # Cache bun dependencies
       - name: Cache bun modules

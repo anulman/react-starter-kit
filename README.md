@@ -177,6 +177,8 @@ export const getItems = createServerFn({ method: "GET" })
 
 ### Environment Variables
 
+Environment validation is handled by [varlock](https://varlock.dev) via `.env.schema`. Add `@required`, `@type`, `@sensitive` decorators to define your schema. Varlock validates on load and fails fast with clear errors.
+
 ```tsx
 // Client-side (must be prefixed with VITE_)
 import { env } from "@/lib/env";

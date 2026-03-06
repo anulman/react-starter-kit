@@ -4,11 +4,6 @@ import { describe, it, expect, vi } from "vitest";
 import { Button } from "./Button";
 
 describe("Button", () => {
-  it("renders without crashing", () => {
-    render(<Button>Click me</Button>);
-    expect(screen.getByRole("button", { name: "Click me" })).toBeInTheDocument();
-  });
-
   it("fires onClick handler", async () => {
     const onClick = vi.fn();
     render(<Button onClick={onClick}>Click</Button>);

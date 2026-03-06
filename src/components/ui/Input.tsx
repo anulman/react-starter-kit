@@ -1,3 +1,8 @@
+// NOTE: This component bundles label + input + error for convenience.
+// For more granular composition, consider a Field pattern:
+//   <Field.Root><Field.Label /><Field.Input /><Field.Error /></Field.Root>
+// See recipes/forms/ for composition examples.
+
 import {
   forwardRef,
   type InputHTMLAttributes,

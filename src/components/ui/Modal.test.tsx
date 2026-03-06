@@ -41,17 +41,27 @@ describe("Modal", () => {
     expect(screen.getByText("My Desc")).toBeInTheDocument();
   });
 
-  it("calls onOpenChange and onClose when closing", async () => {
+  it("calls onOpenChange when closing", async () => {
     const onOpenChange = vi.fn();
-    const onClose = vi.fn();
     render(
-      <Modal open onOpenChange={onOpenChange} onClose={onClose} showCloseButton>
+      <Modal open onOpenChange={onOpenChange} showCloseButton>
         <p>content</p>
       </Modal>
     );
     const closeBtn = screen.getByRole("button", { name: "Close" });
     closeBtn.click();
     expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  it("calls onClose when closing (alternative API)", async () => {
+    const onClose = vi.fn();
+    render(
+      <Modal open onClose={onClose} showCloseButton>
+        <p>content</p>
+      </Modal>
+    );
+    const closeBtn = screen.getByRole("button", { name: "Close" });
+    closeBtn.click();
     expect(onClose).toHaveBeenCalled();
   });
 

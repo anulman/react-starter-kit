@@ -3,6 +3,7 @@ import {
   useContext,
   useState,
   useCallback,
+  useRef,
   type ReactNode,
 } from "react";
 import { css, cva } from "styled-system/css";
@@ -86,6 +87,8 @@ export type ToastProviderProps = {
 
 export function ToastProvider({ children, duration = 5000 }: ToastProviderProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const durationRef = useRef(duration);
+  durationRef.current = duration;
 
   const toast = useCallback(
     (input: ToastInput) => {
@@ -93,9 +96,9 @@ export function ToastProvider({ children, duration = 5000 }: ToastProviderProps)
       setToasts((prev) => [...prev, { ...input, id }]);
       setTimeout(() => {
         setToasts((prev) => prev.filter((t) => t.id !== id));
-      }, duration);
+      }, durationRef.current);
     },
-    [duration]
+    []
   );
 
   const dismiss = useCallback((id: string) => {

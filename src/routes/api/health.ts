@@ -3,6 +3,8 @@
  *
  * Returns 200 with status. Add your own dependency checks here.
  */
+// TODO: Migrate to createAPIFileRoute from "@tanstack/react-start/api" when available.
+// See: https://tanstack.com/router/latest/docs/framework/react/start/api-routes
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/api/health")({

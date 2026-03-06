@@ -15,7 +15,7 @@
 
 import { env } from "@/lib/env";
 
-export interface HeadOptions {
+export interface HeadConfig {
   /** Page title. Automatically appended with " | AppName" unless `rawTitle` is true. */
   title?: string;
   /** Meta description for SEO. Also used for og:description. */
@@ -26,13 +26,18 @@ export interface HeadOptions {
   canonical?: string;
   /** Skip appending app name to title. */
   rawTitle?: boolean;
+  /** Script tags to inject. */
+  scripts?: Array<{ src?: string; content?: string; async?: boolean }>;
   /** Additional meta tags. */
   meta?: Array<Record<string, string>>;
   /** Additional link tags. */
   links?: Array<Record<string, string>>;
 }
 
-export function makeHead(options: HeadOptions = {}) {
+/** @deprecated Use HeadConfig instead */
+export type HeadOptions = HeadConfig;
+
+export function makeHead(options: HeadConfig = {}) {
   const appName = env.VITE_APP_NAME;
   const appUrl = env.VITE_APP_URL;
 
@@ -80,5 +85,12 @@ export function makeHead(options: HeadOptions = {}) {
     ...(options.links || []),
   ];
 
-  return { meta, links };
+  const scripts = (options.scripts || []).map((s) => ({
+    ...(s.src ? { src: s.src } : {}),
+    ...(s.content ? { children: s.content } : {}),
+    ...(s.async ? { async: true } : {}),
+    tag: "script" as const,
+  }));
+
+  return { meta, links, scripts: scripts.length > 0 ? scripts : undefined };
 }

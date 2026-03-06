@@ -5,6 +5,7 @@ import { DefaultErrorComponent, DefaultNotFound } from "./ErrorBoundary";
 // Mock TanStack Router
 vi.mock("@tanstack/react-router", () => ({
   useRouter: () => ({ navigate: vi.fn() }),
+  useNavigate: () => vi.fn(),
 }));
 
 // Mock UI components
@@ -29,7 +30,13 @@ describe("DefaultErrorComponent", () => {
     const reset = vi.fn();
     render(<DefaultErrorComponent error={new Error("x")} reset={reset} />);
     screen.getByRole("button", { name: "Try again" }).click();
-    expect(reset).toHaveBeenCalled();
+    expect(reset).toHaveBeenCalledOnce();
+  });
+
+  it("shows error details in dev mode", () => {
+    // import.meta.env.DEV is true in test environment
+    render(<DefaultErrorComponent error={new Error("boom")} reset={() => {}} />);
+    expect(screen.getByText(/boom/)).toBeInTheDocument();
   });
 });
 

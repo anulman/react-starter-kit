@@ -80,6 +80,10 @@ Cloudflare Workers don't have `process.env`. Worker bindings are request-scoped.
 
 ## Component Creation Guide
 
+> **React 19 note:** `forwardRef` is technically legacy in React 19 — refs can be passed
+> as regular props. The existing components use `forwardRef` for broad compatibility.
+> When creating new components, you may pass `ref` as a prop directly instead.
+
 ### Adding a new UI component
 
 1. **Create the file** in `src/components/ui/YourComponent.tsx`
@@ -224,6 +228,10 @@ beforeLoad: async () => {
 ```
 
 ### API routes
+
+> **Note:** When `createAPIFileRoute` from `@tanstack/react-start/api` becomes available,
+> migrate API routes to use it instead of the `server.handlers` pattern below.
+
 ```tsx
 export const Route = createFileRoute("/api/my-endpoint")({
   server: {
@@ -238,6 +246,10 @@ export const Route = createFileRoute("/api/my-endpoint")({
 ---
 
 ## Environment Variables
+
+> **Environment validation is handled by varlock via `.env.schema`.** Add `@required`,
+> `@type`, `@sensitive` decorators to define your schema. Varlock validates on load and
+> fails fast with clear errors. Do not add manual validation wrappers around env access.
 
 ### Client-side (`VITE_*`)
 ```tsx

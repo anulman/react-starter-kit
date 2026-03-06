@@ -10,7 +10,11 @@ export interface RouterContext {
   queryClient: QueryClient;
 }
 
-export function getRouter() {
+/**
+ * Creates a new router instance. Called once per request for SSR safety —
+ * each request gets its own router + QueryClient to avoid shared state.
+ */
+export function createAppRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -35,6 +39,6 @@ export function getRouter() {
 
 declare module "@tanstack/react-router" {
   interface Register {
-    router: ReturnType<typeof getRouter>;
+    router: ReturnType<typeof createAppRouter>;
   }
 }

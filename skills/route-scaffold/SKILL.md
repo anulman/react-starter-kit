@@ -97,6 +97,36 @@ export const APIRoute = createAPIFileRoute("/api/{name}")({
 });
 ```
 
+### Page with Typed Search Params
+
+Use Zod to validate and type search parameters:
+
+```tsx
+import { createFileRoute } from "@tanstack/react-router";
+import { z } from "zod";
+import { makeHead } from "@/lib/head";
+
+const searchSchema = z.object({
+  q: z.string().optional(),
+  page: z.number().default(1),
+});
+
+export const Route = createFileRoute("/_app/search")({
+  validateSearch: searchSchema,
+  head: () => makeHead({ title: "Search" }),
+  component: SearchPage,
+});
+
+function SearchPage() {
+  const { q, page } = Route.useSearch();
+  return (
+    <div>
+      <p>Query: {q ?? "none"}, Page: {page}</p>
+    </div>
+  );
+}
+```
+
 ## Rules
 
 - **Always use `makeHead()`** for page routes -- never raw meta arrays

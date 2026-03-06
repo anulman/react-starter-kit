@@ -37,6 +37,8 @@ export function ConfirmDialog({
     try {
       await onConfirm();
       onOpenChange(false);
+    } catch {
+      // Error recovery: loading clears, dialog stays open for retry
     } finally {
       setIsLoading(false);
     }

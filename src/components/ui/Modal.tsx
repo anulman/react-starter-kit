@@ -18,16 +18,19 @@ const closeButtonStyles = css({
   _hover: { color: "fg" },
 });
 
-export type ModalProps = {
+type ModalPropsBase = {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
-  /** Convenience alias for onOpenChange(false) */
-  onClose?: () => void;
   title?: string;
   description?: string;
   children: ReactNode;
   showCloseButton?: boolean;
 };
+
+export type ModalProps = ModalPropsBase &
+  (
+    | { onOpenChange: (open: boolean) => void; onClose?: never }
+    | { onClose: () => void; onOpenChange?: never }
+  );
 
 export function Modal({
   open,
@@ -38,9 +41,12 @@ export function Modal({
   children,
   showCloseButton = true,
 }: ModalProps) {
-  const handleOpenChange = (open: boolean) => {
-    if (!open) onClose?.();
-    onOpenChange(open);
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (onOpenChange) {
+      onOpenChange(nextOpen);
+    } else if (!nextOpen && onClose) {
+      onClose();
+    }
   };
 
   return (
