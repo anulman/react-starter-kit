@@ -317,3 +317,18 @@ Each recipe has its own README with setup instructions and required dependencies
 ❌ **No `process.env` in Workers** — use `getServerEnv()` for server secrets, `import.meta.env` for client vars
 ❌ **No `any` types** — unless justified with a comment explaining why
 ❌ **No server imports at module level in routes** — use dynamic `import()` in `beforeLoad`/`loader`
+
+---
+
+## Agent Skills
+
+Reusable instructions for common tasks. Read the relevant SKILL.md before executing.
+
+| Skill | Location | When to Use |
+|-------|----------|-------------|
+| **Component Scaffold** | `skills/component-scaffold/SKILL.md` | Creating a new UI component |
+| **Storybook Generation** | `skills/storybook-gen/SKILL.md` | Adding/updating component stories |
+| **Route Scaffold** | `skills/route-scaffold/SKILL.md` | Creating a new page or API route |
+| **Recipe Install** | `skills/recipe-install/SKILL.md` | Adding auth, forms, Convex, PostHog, etc. |
+
+Read the skill file before acting. Follow its conventions exactly.
