@@ -1,6 +1,7 @@
 import { forwardRef, useId } from "react";
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
-import { css, cva, type RecipeVariantProps } from "styled-system/css";
+import { css, cx, cva, type RecipeVariantProps } from "styled-system/css";
+import { CheckIcon } from "@/components/icons";
 
 const checkboxRecipe = cva({
   base: {
@@ -8,8 +9,8 @@ const checkboxRecipe = cva({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "sm",
-    border: "1px solid token(colors.border)",
-    bg: "background",
+    borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+    bg: "bg",
     cursor: "pointer",
     transition: "background-color 150ms, border-color 150ms",
     _hover: { borderColor: "text.muted" },
@@ -44,7 +45,7 @@ const wrapperStyles = css({
 });
 
 const checkboxLabelRecipe = cva({
-  base: { color: "text", cursor: "pointer", userSelect: "none" },
+  base: { color: "fg", cursor: "pointer", userSelect: "none" },
   variants: {
     size: {
       sm: { fontSize: "sm" },
@@ -88,10 +89,10 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
           disabled={disabled}
           name={name}
           value={value}
-          className={checkboxRecipe({ size }) + (className ? ` ${className}` : "")}
+          className={cx(checkboxRecipe({ size }), className)}
         >
           <BaseCheckbox.Indicator className={indicatorStyles}>
-            <CheckIcon size={size} />
+            <CheckIcon size={size === "sm" ? 12 : size === "lg" ? 18 : 14} strokeWidth={3} />
           </BaseCheckbox.Indicator>
         </BaseCheckbox.Root>
         {label && (
@@ -103,21 +104,3 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
     );
   }
 );
-
-function CheckIcon({ size }: { size?: "sm" | "md" | "lg" }) {
-  const iconSize = size === "sm" ? 12 : size === "lg" ? 18 : 14;
-  return (
-    <svg
-      width={iconSize}
-      height={iconSize}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}

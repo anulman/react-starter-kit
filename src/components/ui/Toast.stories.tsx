@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { userEvent, within, expect } from "@storybook/test";
-import { useToast, ToastProvider } from "./Toast";
+import { useToast, ToastProvider } from "./ToastProvider";
 import { Button } from "./Button";
 
 // Create a wrapper component for stories since Toast requires useToast hook

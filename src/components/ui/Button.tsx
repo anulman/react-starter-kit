@@ -1,6 +1,6 @@
 import { forwardRef, type ComponentPropsWithoutRef } from "react";
 import { Button as BaseButton } from "@base-ui-components/react/button";
-import { cva, type RecipeVariantProps } from "styled-system/css";
+import { cx, cva, type RecipeVariantProps } from "styled-system/css";
 import { LoadingSpinner } from "./LoadingSpinner";
 
 const buttonRecipe = cva({
@@ -32,11 +32,11 @@ const buttonRecipe = cva({
         },
       },
       secondary: {
-        bg: "surface",
-        color: "text",
-        border: "1px solid token(colors.border)",
+        bg: "bg.surface",
+        color: "fg",
+        borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
         _hover: {
-          bg: "background",
+          bg: "bg",
           borderColor: "text.muted",
         },
       },
@@ -49,9 +49,9 @@ const buttonRecipe = cva({
       },
       ghost: {
         bg: "transparent",
-        color: "text",
+        color: "fg",
         _hover: {
-          bg: "surface",
+          bg: "bg.surface",
         },
       },
     },
@@ -103,7 +103,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <BaseButton
         ref={ref}
         disabled={isDisabled}
-        className={buttonRecipe({ variant, size }) + (className ? ` ${className}` : "")}
+        className={cx(buttonRecipe({ variant, size }), className)}
         {...props}
       >
         {loading && <LoadingSpinner size={spinnerSizeMap[size]} label="Loading" />}

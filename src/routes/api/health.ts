@@ -12,6 +12,9 @@ export const Route = createFileRoute("/api/health")({
         const response = {
           healthy: true,
           timestamp: Date.now(),
+          // Add service health checks here, e.g.:
+          // database: await db.ping().then(() => "ok").catch(() => "error"),
+          // cache: await redis.ping().then(() => "ok").catch(() => "error"),
           services: {},
         };
 

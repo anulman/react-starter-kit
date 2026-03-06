@@ -1,8 +1,8 @@
-import { cva, type RecipeVariantProps } from "styled-system/css";
+import { cx, cva, type RecipeVariantProps } from "styled-system/css";
 
 const skeletonRecipe = cva({
   base: {
-    bg: "surface",
+    bg: "bg.surface",
     animation: "pulse 1.5s ease-in-out infinite",
   },
   variants: {
@@ -33,7 +33,7 @@ export function Skeleton({ variant, width, height, className }: SkeletonProps) {
 
   return (
     <div
-      className={skeletonRecipe({ variant }) + (className ? ` ${className}` : "")}
+      className={cx(skeletonRecipe({ variant }), className)}
       style={style}
       aria-hidden="true"
     />

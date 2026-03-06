@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AlertDialog as BaseAlertDialog } from "@base-ui-components/react/alert-dialog";
 import { css } from "styled-system/css";
 import { Button } from "./Button";
@@ -14,7 +15,7 @@ const popupStyles = css({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  bg: "background",
+  bg: "bg",
   borderRadius: "md",
   boxShadow: "lg",
   p: "lg",
@@ -27,13 +28,13 @@ const popupStyles = css({
 const titleStyles = css({
   fontSize: "lg",
   fontWeight: "semibold",
-  color: "text",
+  color: "fg",
   marginBottom: "xs",
 });
 
 const descriptionStyles = css({
   fontSize: "md",
-  color: "text.muted",
+  color: "fg.muted",
   marginBottom: "lg",
 });
 
@@ -50,10 +51,8 @@ export type ConfirmDialogProps = {
   description?: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   variant?: "danger" | "primary";
-  /** Show loading state on confirm button */
-  loading?: boolean;
 };
 
 /**
@@ -113,13 +112,16 @@ export function ConfirmDialog({
   cancelLabel = "Cancel",
   onConfirm,
   variant = "primary",
-  loading = false,
 }: ConfirmDialogProps) {
-  const handleConfirm = () => {
-    onConfirm();
-    // Don't auto-close when loading - let the caller control closing
-    if (!loading) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleConfirm = async () => {
+    setIsLoading(true);
+    try {
+      await onConfirm();
       onOpenChange(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -139,7 +141,7 @@ export function ConfirmDialog({
           <div className={actionsStyles}>
             <BaseAlertDialog.Close
               render={
-                <Button variant="secondary" disabled={loading}>
+                <Button variant="secondary" disabled={isLoading}>
                   {cancelLabel}
                 </Button>
               }
@@ -147,8 +149,8 @@ export function ConfirmDialog({
             <Button
               variant={variant}
               onClick={handleConfirm}
-              loading={loading}
-              disabled={loading}
+              loading={isLoading}
+              disabled={isLoading}
             >
               {confirmLabel}
             </Button>

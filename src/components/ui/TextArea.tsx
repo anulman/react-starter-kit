@@ -1,19 +1,19 @@
 import { forwardRef, type TextareaHTMLAttributes, useId } from "react";
-import { cva, type RecipeVariantProps } from "styled-system/css";
+import { cx, cva, type RecipeVariantProps } from "styled-system/css";
 import { labelRecipe, errorRecipe } from "./fieldStyles";
 
 const textAreaRecipe = cva({
   base: {
     width: "100%",
     borderRadius: "sm",
-    border: "1px solid token(colors.border)",
-    bg: "background",
-    color: "text",
+    borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+    bg: "bg",
+    color: "fg",
     resize: "vertical",
     minHeight: "80px",
     transition: "border-color 150ms, box-shadow 150ms",
     _placeholder: {
-      color: "text.muted",
+      color: "fg.muted",
     },
     _hover: {
       borderColor: "text.muted",
@@ -26,7 +26,7 @@ const textAreaRecipe = cva({
     _disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
-      bg: "surface",
+      bg: "bg.surface",
     },
   },
   variants: {
@@ -76,7 +76,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           id={id}
           aria-invalid={!!error}
           aria-describedby={error ? errorId : undefined}
-          className={textAreaRecipe({ size, hasError: !!error }) + (className ? ` ${className}` : "")}
+          className={cx(textAreaRecipe({ size, hasError: !!error }), className)}
           {...props}
         />
         {error && (

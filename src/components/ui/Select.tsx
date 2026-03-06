@@ -1,6 +1,6 @@
 import { useId, type ReactNode } from "react";
 import { Select as BaseSelect } from "@base-ui-components/react/select";
-import { cva, css, type RecipeVariantProps } from "styled-system/css";
+import { cx, cva, css, type RecipeVariantProps } from "styled-system/css";
 import { labelRecipe, errorRecipe } from "./fieldStyles";
 import { ChevronDownIcon } from "@/components/icons";
 import { LoadingSpinner } from "./LoadingSpinner";
@@ -12,9 +12,9 @@ const triggerRecipe = cva({
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: "sm",
-    border: "1px solid token(colors.border)",
-    bg: "background",
-    color: "text",
+    borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+    bg: "bg",
+    color: "fg",
     cursor: "pointer",
     transition: "border-color 150ms, box-shadow 150ms",
     _hover: { borderColor: "text.muted" },
@@ -26,7 +26,7 @@ const triggerRecipe = cva({
     _disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
-      bg: "surface",
+      bg: "bg.surface",
     },
     "&[data-popup-open]": {
       borderColor: "primary",
@@ -55,8 +55,8 @@ const triggerRecipe = cva({
 const positionerStyles = css({ zIndex: 1 });
 
 const popupStyles = css({
-  bg: "background",
-  border: "1px solid token(colors.border)",
+  bg: "bg",
+  borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
   borderRadius: "sm",
   boxShadow: "md",
   py: "xs",
@@ -72,10 +72,10 @@ const optionRecipe = cva({
     cursor: "pointer",
     transition: "background-color 100ms",
     _hover: {
-      bg: "surface",
-      "&[data-selected]": { color: "text", textDecoration: "underline" },
+      bg: "bg.surface",
+      "&[data-selected]": { color: "fg", textDecoration: "underline" },
     },
-    "&[data-highlighted]": { bg: "surface" },
+    "&[data-highlighted]": { bg: "bg.surface" },
     "&[data-selected]": { bg: "primary", color: "white" },
   },
   variants: {
@@ -88,7 +88,7 @@ const optionRecipe = cva({
   defaultVariants: { size: "md" },
 });
 
-const placeholderStyles = css({ color: "text.muted" });
+const placeholderStyles = css({ color: "fg.muted" });
 
 type SelectVariants = RecipeVariantProps<typeof triggerRecipe>;
 
@@ -112,6 +112,7 @@ export type SelectProps = {
   name?: string;
   id?: string;
   className?: string;
+  containerClassName?: string;
   triggerLabel?: ReactNode;
   alignItemWithTrigger?: boolean;
   sideOffset?: number;
@@ -134,6 +135,7 @@ export function Select({
   size = "md",
   id: providedId,
   className,
+  containerClassName,
   triggerLabel,
   alignItemWithTrigger = true,
   sideOffset = 0,
@@ -144,7 +146,7 @@ export function Select({
   const isDisabled = disabled || loading;
 
   return (
-    <div>
+    <div className={containerClassName}>
       {label && (
         <label htmlFor={id} className={labelRecipe({ size })}>
           {label}
@@ -163,7 +165,7 @@ export function Select({
           aria-label={ariaLabel}
           aria-invalid={!!error}
           aria-describedby={error ? errorId : undefined}
-          className={triggerRecipe({ size, hasError: !!error }) + (className ? ` ${className}` : "")}
+          className={cx(triggerRecipe({ size, hasError: !!error }), className)}
         >
           {triggerLabel ? (
             <>

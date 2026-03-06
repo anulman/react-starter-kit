@@ -1,10 +1,10 @@
-import { cva, type RecipeVariantProps } from "styled-system/css";
+import { cx, cva, type RecipeVariantProps } from "styled-system/css";
 
 const spinnerRecipe = cva({
   base: {
     display: "inline-block",
     borderRadius: "full",
-    border: "2px solid token(colors.border)",
+    borderWidth: "2px", borderStyle: "solid", borderColor: "border.semantic",
     borderTopColor: "primary",
     animation: "spin 0.8s linear infinite",
   },
@@ -33,7 +33,7 @@ export function LoadingSpinner({ size, label = "Loading...", className }: Loadin
     <span
       role="status"
       aria-label={label}
-      className={spinnerRecipe({ size }) + (className ? ` ${className}` : "")}
+      className={cx(spinnerRecipe({ size }), className)}
     />
   );
 }

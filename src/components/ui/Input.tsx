@@ -12,12 +12,12 @@ const inputRecipe = cva({
   base: {
     width: "100%",
     borderRadius: "sm",
-    border: "1px solid token(colors.border)",
-    bg: "background",
-    color: "text",
+    borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
+    bg: "bg",
+    color: "fg",
     transition: "border-color 150ms, box-shadow 150ms",
     _placeholder: {
-      color: "text.muted",
+      color: "fg.muted",
     },
     _hover: {
       borderColor: "text.muted",
@@ -30,7 +30,7 @@ const inputRecipe = cva({
     _disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
-      bg: "surface",
+      bg: "bg.surface",
     },
   },
   variants: {

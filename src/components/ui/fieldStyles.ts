@@ -4,7 +4,7 @@ export const labelRecipe = cva({
   base: {
     display: "block",
     fontWeight: "medium",
-    color: "text",
+    color: "fg",
     marginBottom: "xs",
   },
   variants: {

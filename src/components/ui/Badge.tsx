@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes } from "react";
-import { cva, type RecipeVariantProps } from "styled-system/css";
+import { cx, cva, type RecipeVariantProps } from "styled-system/css";
 
 const badgeRecipe = cva({
   base: {
@@ -12,10 +12,10 @@ const badgeRecipe = cva({
   },
   variants: {
     variant: {
-      default: { bg: "surface", color: "text" },
+      default: { bg: "bg.surface", color: "fg" },
       primary: { bg: "primary", color: "white" },
       success: { bg: "success", color: "white" },
-      warning: { bg: "warning", color: "text" },
+      warning: { bg: "warning", color: "fg" },
       danger: { bg: "danger", color: "white" },
     },
     size: {
@@ -36,7 +36,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     return (
       <span
         ref={ref}
-        className={badgeRecipe({ variant, size }) + (className ? ` ${className}` : "")}
+        className={cx(badgeRecipe({ variant, size }), className)}
         {...props}
       />
     );

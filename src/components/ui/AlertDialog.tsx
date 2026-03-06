@@ -14,7 +14,7 @@ const popupStyles = css({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  bg: "background",
+  bg: "bg",
   borderRadius: "md",
   boxShadow: "lg",
   p: "lg",
@@ -27,13 +27,13 @@ const popupStyles = css({
 const titleStyles = css({
   fontSize: "lg",
   fontWeight: "semibold",
-  color: "text",
+  color: "fg",
   marginBottom: "xs",
 });
 
 const descriptionStyles = css({
   fontSize: "md",
-  color: "text.muted",
+  color: "fg.muted",
   marginBottom: "lg",
 });
 

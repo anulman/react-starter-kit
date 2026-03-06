@@ -15,7 +15,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "use-sync-external-store/shim/index.js": "react",
+      // React 19 includes useSyncExternalStore natively. These aliases
+      // redirect shim imports to the real package for compatibility with
+      // libraries that haven't fully dropped the shim yet.
+      "use-sync-external-store/shim/index.js": "use-sync-external-store",
+      "use-sync-external-store/shim/with-selector.js": "use-sync-external-store",
     },
   },
   optimizeDeps: {

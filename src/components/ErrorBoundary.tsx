@@ -31,13 +31,13 @@ const containerStyles = css({
 const titleStyles = css({
   fontSize: "2xl",
   fontWeight: "bold",
-  color: "text",
+  color: "fg",
   mb: "sm",
 });
 
 const messageStyles = css({
   fontSize: "md",
-  color: "text.muted",
+  color: "fg.muted",
   mb: "lg",
   maxWidth: "480px",
   lineHeight: "relaxed",
@@ -47,7 +47,7 @@ const codeStyles = css({
   fontFamily: "mono",
   fontSize: "sm",
   color: "danger",
-  bg: "surface",
+  bg: "bg.surface",
   p: "md",
   borderRadius: "md",
   maxWidth: "600px",

@@ -32,13 +32,13 @@ const toastRecipe = cva({
   variants: {
     variant: {
       default: {
-        bg: "background",
-        color: "text",
-        border: "1px solid token(colors.border)",
+        bg: "bg",
+        color: "fg",
+        borderWidth: "1px", borderStyle: "solid", borderColor: "border.semantic",
       },
       success: { bg: "success", color: "white" },
       error: { bg: "danger", color: "white" },
-      warning: { bg: "warning", color: "text" },
+      warning: { bg: "warning", color: "fg" },
     },
   },
   defaultVariants: { variant: "default" },
@@ -108,7 +108,7 @@ export function ToastProvider({ children, duration = 5000 }: ToastProviderProps)
       {toasts.length > 0 && (
         <div className={toastContainerStyles}>
           {toasts.map((t) => (
-            <div key={t.id} role="status" className={toastRecipe({ variant: t.variant })}>
+            <div key={t.id} role={t.variant === "error" || t.variant === "warning" ? "alert" : "status"} className={toastRecipe({ variant: t.variant })}>
               <div className={contentStyles}>
                 {t.title && <div className={titleStyles}>{t.title}</div>}
                 <div className={messageStyles}>{t.message}</div>
