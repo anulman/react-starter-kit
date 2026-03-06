@@ -41,13 +41,18 @@ jobs:
       - name: Build
         run: bun run build
 
+      - name: Get Playwright version
+        id: pw-version
+        run: echo "version=$(bunx playwright --version)" >> "$GITHUB_OUTPUT"
+
       # Cache Playwright browsers separately (large, changes rarely)
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          # Key on Playwright version only — avoids invalidating ~400MB browser cache on unrelated dep changes
+          key: playwright-${{ runner.os }}-${{ steps.pw-version.outputs.version }}
 
       - name: Install Playwright browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
