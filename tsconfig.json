@@ -38,6 +38,8 @@
     "dist",
     "styled-system",
     "recipes",
-    "storybook-static"
+    "storybook-static",
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ]
 }
