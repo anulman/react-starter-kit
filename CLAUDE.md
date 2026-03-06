@@ -25,7 +25,7 @@ bun run deploy           # Deploy to Cloudflare Workers
 | Layout utilities | `src/components/layout/` |
 | Icons | `src/components/icons/` |
 | Routes | `src/routes/` |
-| Client env | `src/lib/env.ts` |
+| Client env | `import.meta.env.VITE_*` (validated by `.env.schema`) |
 | Server env | `src/lib/serverEnv.ts` (re-exports varlock `ENV`) |
 | Theme tokens | `panda.config.ts` |
 | Global CSS | `src/styles/global.css` |
@@ -253,10 +253,12 @@ export const Route = createFileRoute("/api/my-endpoint")({
 
 ### Client-side (`VITE_*`)
 ```tsx
-import { env } from "@/lib/env";
-console.log(env.VITE_APP_URL);
+// Use import.meta.env directly — varlock validates on load
+const appName = import.meta.env.VITE_APP_NAME;
 ```
 Set in `wrangler.jsonc` `vars` or `.env` locally. Bundled into client JS — **never put secrets here**.
+
+> **Do not add manual validation wrappers.** Environment validation is handled entirely by varlock via `.env.schema`.
 
 ### Server-side (secrets)
 ```tsx

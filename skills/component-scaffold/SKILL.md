@@ -95,3 +95,4 @@ Read these for established patterns before generating:
 - `src/components/ui/Modal.tsx` -- Dialog primitive + overlay + portal
 - `src/components/ui/Badge.tsx` -- Simple variant-only component
 - `src/components/ui/Select.tsx` -- Complex BaseUI primitive with options
+- `src/components/ui/Field.tsx` -- Composable field parts (Root, Label, Input, TextArea, Error)

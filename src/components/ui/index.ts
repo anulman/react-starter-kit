@@ -1,4 +1,5 @@
 export { Button, type ButtonProps } from "./Button";
+export { Field } from "./Field";
 export { Input, type InputProps } from "./Input";
 export { TextArea, type TextAreaProps } from "./TextArea";
 export { Select, type SelectProps, type SelectOption } from "./Select";

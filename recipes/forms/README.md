@@ -137,4 +137,14 @@ onSubmit: async ({ value }) => {
 ### Error Display
 
 The starter kit's `Input` and `TextArea` accept an `error` prop for inline validation messages.
+For more granular control, use the `Field` composition pattern:
+
+```tsx
+<Field.Root>
+  <Field.Label htmlFor="name">Name</Field.Label>
+  <Field.Input id="name" hasError={!!error} />
+  <Field.Error>{error}</Field.Error>
+</Field.Root>
+```
+
 For form-level errors, use `AlertDialog` or the toast system.

@@ -177,12 +177,12 @@ export const getItems = createServerFn({ method: "GET" })
 
 ### Environment Variables
 
-Environment validation is handled by [varlock](https://varlock.dev) via `.env.schema`. Add `@required`, `@type`, `@sensitive` decorators to define your schema. Varlock validates on load and fails fast with clear errors.
+Environment validation is handled entirely by [varlock](https://varlock.dev) via `.env.schema`. Add `@required`, `@type`, `@sensitive` decorators to define your schema. Varlock validates on load and fails fast with clear errors. Do not add manual validation wrappers.
 
 ```tsx
 // Client-side (must be prefixed with VITE_)
-import { env } from "@/lib/env";
-const apiUrl = env.VITE_API_URL;
+// Use import.meta.env directly — varlock validates on load via .env.schema
+const appName = import.meta.env.VITE_APP_NAME;
 
 // Server-side (inside request handlers only  --  not at module top level)
 import { ENV } from "@/lib/serverEnv";
@@ -323,7 +323,7 @@ bun run deploy       # Deploy to Cloudflare Workers
 │   │   ├── layout/       # Flex, Grid, HStack, VStack, Box, Center
 │   │   └── icons/        # Minimal icon set (7 icons)
 │   ├── lib/
-│   │   ├── env.ts        # Client env helper
+│   │   ├── env.ts        # Client env flags (isProduction, isDevelopment)
 │   │   └── serverEnv.ts  # Server env (re-exports varlock ENV)
 │   ├── routes/           # File-based routing (TanStack Start)
 │   ├── styles/

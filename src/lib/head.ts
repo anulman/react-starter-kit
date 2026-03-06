@@ -13,8 +13,6 @@
  *   });
  */
 
-import { env } from "@/lib/env";
-
 export interface HeadConfig {
   /** Page title. Automatically appended with " | AppName" unless `rawTitle` is true. */
   title?: string;
@@ -38,8 +36,8 @@ export interface HeadConfig {
 export type HeadOptions = HeadConfig;
 
 export function makeHead(options: HeadConfig = {}) {
-  const appName = env.VITE_APP_NAME;
-  const appUrl = env.VITE_APP_URL;
+  const appName = import.meta.env.VITE_APP_NAME ?? "My App";
+  const appUrl = import.meta.env.VITE_APP_URL ?? "";
 
   const title = options.title
     ? options.rawTitle

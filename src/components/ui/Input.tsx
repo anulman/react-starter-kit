@@ -1,78 +1,6 @@
-// NOTE: This component bundles label + input + error for convenience.
-// For more granular composition, consider a Field pattern:
-//   <Field.Root><Field.Label /><Field.Input /><Field.Error /></Field.Root>
-// See recipes/forms/ for composition examples.
-
-import {
-  forwardRef,
-  type InputHTMLAttributes,
-  type HTMLAttributes,
-  useId,
-} from "react";
-import { Input as BaseInput } from "@base-ui-components/react/input";
-import { cx, cva, type RecipeVariantProps } from "styled-system/css";
-import { labelRecipe, errorRecipe } from "./fieldStyles";
-
-const inputRecipe = cva({
-  base: {
-    width: "100%",
-    borderRadius: "sm",
-    borderWidth: "1px", borderStyle: "solid", borderColor: "stroke",
-    bg: "bg",
-    color: "fg",
-    transition: "border-color 150ms, box-shadow 150ms",
-    _placeholder: {
-      color: "fg.muted",
-    },
-    _hover: {
-      borderColor: "text.muted",
-    },
-    _focus: {
-      outline: "none",
-      borderColor: "primary",
-      boxShadow: "0 0 0 1px token(colors.primary)",
-    },
-    _disabled: {
-      opacity: 0.5,
-      cursor: "not-allowed",
-      bg: "bg.surface",
-    },
-  },
-  variants: {
-    size: {
-      sm: {
-        px: "sm",
-        py: "xs",
-        fontSize: "md",
-        minHeight: "32px",
-      },
-      md: {
-        px: "md",
-        py: "sm",
-        fontSize: "md",
-        minHeight: "40px",
-      },
-      lg: {
-        px: "md",
-        py: "md",
-        fontSize: "lg",
-        minHeight: "48px",
-      },
-    },
-    hasError: {
-      true: {
-        borderColor: "danger",
-        _focus: {
-          borderColor: "danger",
-          boxShadow: "0 0 0 1px token(colors.danger)",
-        },
-      },
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-});
+import { forwardRef, type InputHTMLAttributes, type HTMLAttributes, useId } from "react";
+import { cx, type RecipeVariantProps } from "styled-system/css";
+import { Field, inputRecipe } from "./Field";
 
 type InputVariants = RecipeVariantProps<typeof inputRecipe>;
 
@@ -92,25 +20,27 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const errorId = `${id}-error`;
 
   return (
-    <div {...containerProps}>
+    <Field.Root {...containerProps}>
       {label && (
-        <label htmlFor={id} className={labelRecipe({ size })}>
+        <Field.Label htmlFor={id} size={size}>
           {label}
-        </label>
+        </Field.Label>
       )}
-      <BaseInput
+      <Field.Input
         ref={ref}
         id={id}
+        size={size}
+        hasError={!!error}
         aria-invalid={!!error}
         aria-describedby={error ? errorId : undefined}
-        className={cx(className, inputRecipe({ size, hasError: !!error }))}
+        className={cx(className)}
         {...props}
       />
       {error && (
-        <p id={errorId} className={errorRecipe({ size })}>
+        <Field.Error id={errorId} size={size}>
           {error}
-        </p>
+        </Field.Error>
       )}
-    </div>
+    </Field.Root>
   );
 });

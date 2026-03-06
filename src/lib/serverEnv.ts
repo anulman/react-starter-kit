@@ -14,7 +14,7 @@
  *     // ENV.DATABASE_URL, ENV.API_KEY, etc.
  *   });
  *
- * For client-side vars (VITE_*), use: import { env } from "@/lib/env"
+ * For client-side vars (VITE_*), use `import.meta.env.VITE_*` directly
  */
 import { ENV } from "varlock/env";
 

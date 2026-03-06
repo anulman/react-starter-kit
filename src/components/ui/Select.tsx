@@ -1,7 +1,7 @@
 import { useId, type ReactNode } from "react";
 import { Select as BaseSelect } from "@base-ui-components/react/select";
 import { cx, cva, css, type RecipeVariantProps } from "styled-system/css";
-import { labelRecipe, errorRecipe } from "./fieldStyles";
+import { Field } from "./Field";
 import { ChevronDownIcon } from "@/components/icons";
 import { LoadingSpinner } from "./LoadingSpinner";
 
@@ -146,11 +146,11 @@ export function Select({
   const isDisabled = disabled || loading;
 
   return (
-    <div className={containerClassName}>
+    <Field.Root className={containerClassName}>
       {label && (
-        <label htmlFor={id} className={labelRecipe({ size })}>
+        <Field.Label htmlFor={id} size={size}>
           {label}
-        </label>
+        </Field.Label>
       )}
       <BaseSelect.Root
         value={value}
@@ -215,10 +215,10 @@ export function Select({
         </BaseSelect.Portal>
       </BaseSelect.Root>
       {error && (
-        <p id={errorId} className={errorRecipe({ size })}>
+        <Field.Error id={errorId} size={size}>
           {error}
-        </p>
+        </Field.Error>
       )}
-    </div>
+    </Field.Root>
   );
 }

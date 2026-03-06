@@ -1,54 +1,6 @@
 import { forwardRef, type TextareaHTMLAttributes, useId } from "react";
-import { cx, cva, type RecipeVariantProps } from "styled-system/css";
-import { labelRecipe, errorRecipe } from "./fieldStyles";
-
-const textAreaRecipe = cva({
-  base: {
-    width: "100%",
-    borderRadius: "sm",
-    borderWidth: "1px", borderStyle: "solid", borderColor: "stroke",
-    bg: "bg",
-    color: "fg",
-    resize: "vertical",
-    minHeight: "80px",
-    transition: "border-color 150ms, box-shadow 150ms",
-    _placeholder: {
-      color: "fg.muted",
-    },
-    _hover: {
-      borderColor: "text.muted",
-    },
-    _focus: {
-      outline: "none",
-      borderColor: "primary",
-      boxShadow: "0 0 0 1px token(colors.primary)",
-    },
-    _disabled: {
-      opacity: 0.5,
-      cursor: "not-allowed",
-      bg: "bg.surface",
-    },
-  },
-  variants: {
-    size: {
-      sm: { px: "sm", py: "xs", fontSize: "sm" },
-      md: { px: "md", py: "sm", fontSize: "md" },
-      lg: { px: "md", py: "md", fontSize: "lg" },
-    },
-    hasError: {
-      true: {
-        borderColor: "danger",
-        _focus: {
-          borderColor: "danger",
-          boxShadow: "0 0 0 1px token(colors.danger)",
-        },
-      },
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-});
+import { cx, type RecipeVariantProps } from "styled-system/css";
+import { Field, textAreaRecipe } from "./Field";
 
 type TextAreaVariants = RecipeVariantProps<typeof textAreaRecipe>;
 
@@ -65,26 +17,28 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     const errorId = `${id}-error`;
 
     return (
-      <div>
+      <Field.Root>
         {label && (
-          <label htmlFor={id} className={labelRecipe({ size })}>
+          <Field.Label htmlFor={id} size={size}>
             {label}
-          </label>
+          </Field.Label>
         )}
-        <textarea
+        <Field.TextArea
           ref={ref}
           id={id}
+          size={size}
+          hasError={!!error}
           aria-invalid={!!error}
           aria-describedby={error ? errorId : undefined}
-          className={cx(textAreaRecipe({ size, hasError: !!error }), className)}
+          className={cx(className)}
           {...props}
         />
         {error && (
-          <p id={errorId} className={errorRecipe({ size })}>
+          <Field.Error id={errorId} size={size}>
             {error}
-          </p>
+          </Field.Error>
         )}
-      </div>
+      </Field.Root>
     );
   }
 );
