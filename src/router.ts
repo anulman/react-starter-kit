@@ -10,7 +10,7 @@ export interface RouterContext {
   queryClient: QueryClient;
 }
 
-export async function getRouter() {
+export function getRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -35,6 +35,6 @@ export async function getRouter() {
 
 declare module "@tanstack/react-router" {
   interface Register {
-    router: Awaited<ReturnType<typeof getRouter>>;
+    router: ReturnType<typeof getRouter>;
   }
 }

@@ -133,6 +133,9 @@ export default defineConfig({
         "text.faded": {
           value: { base: "{colors.text.faded}", _dark: "#808080" },
         },
+        overlay: {
+          value: { base: "rgba(0, 0, 0, 0.5)", _dark: "rgba(0, 0, 0, 0.7)" },
+        },
       },
     },
   },

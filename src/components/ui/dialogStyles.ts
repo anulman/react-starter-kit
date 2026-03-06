@@ -1,13 +1,21 @@
 import { css } from "styled-system/css";
 
+/**
+ * z-index note: Both backdrop and popup use zIndex: 1. Stacking is controlled
+ * by DOM order (backdrop renders before popup in the tree). This is intentional
+ * — the project uses only -1, 0, 1 for z-index values.
+ * See CLAUDE.md § "z-index: only -1, 0, 1".
+ */
+
 export const backdropStyles = css({
   position: "fixed",
   inset: 0,
-  bg: "rgba(0, 0, 0, 0.5)",
+  bg: "overlay",
   zIndex: 1,
 });
 
-export const alertPopupStyles = css({
+/** Shared positioning and chrome for dialog popups. */
+const popupBase = {
   position: "fixed",
   top: "50%",
   left: "50%",
@@ -16,27 +24,23 @@ export const alertPopupStyles = css({
   borderRadius: "md",
   boxShadow: "lg",
   p: "lg",
+  zIndex: 1,
+} as const;
+
+export const alertPopupStyles = css({
+  ...popupBase,
   minWidth: { base: "auto", sm: "360px" },
   maxWidth: "400px",
   width: "90vw",
-  zIndex: 1,
 });
 
 export const modalPopupStyles = css({
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bg: "bg",
-  borderRadius: "md",
-  boxShadow: "lg",
-  p: "lg",
+  ...popupBase,
   width: { base: "90vw", sm: "auto" },
   minWidth: { base: "auto", sm: "400px", md: "720px" },
   maxWidth: "90vw",
   maxHeight: "90vh",
   overflow: "auto",
-  zIndex: 1,
 });
 
 export const titleStyles = css({

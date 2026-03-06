@@ -40,6 +40,8 @@
     "recipes",
     "storybook-static",
     "**/*.test.ts",
-    "**/*.test.tsx"
+    "**/*.test.tsx",
+    "playwright.config.ts",
+    "e2e"
   ]
 }
