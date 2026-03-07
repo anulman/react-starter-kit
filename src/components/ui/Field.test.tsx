@@ -60,7 +60,7 @@ describe("Field", () => {
   });
 
   it("applies hasError styling to input", () => {
-    const { container } = render(
+    render(
       <Field.Root>
         <Field.Input hasError placeholder="bad" />
       </Field.Root>
