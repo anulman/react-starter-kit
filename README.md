@@ -360,7 +360,7 @@ bun run deploy           # Deploy to Cloudflare Workers
 │   ├── components/
 │   │   ├── ui/           # Design system (Button, Input, Modal, etc.)
 │   │   ├── layout/       # Flex, Grid, HStack, VStack, Box, Center
-│   │   └── icons/        # Minimal icon set (7 icons)
+│   │   └── icons/        # 7 icons from Untitled UI (thin React wrappers)
 │   ├── lib/
 │   │   ├── env.ts        # Client env flags (isProduction, isDevelopment)
 │   │   └── serverEnv.ts  # Server env (re-exports varlock ENV)
