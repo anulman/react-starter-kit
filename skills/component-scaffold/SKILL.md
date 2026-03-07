@@ -21,7 +21,6 @@ Ask for (if not provided):
 Create `src/components/ui/{Name}.tsx` following this exact pattern:
 
 ```tsx
-import { forwardRef, type ComponentPropsWithoutRef } from "react";
 // Import BaseUI primitive if wrapping one:
 // import { SomePrimitive } from "@base-ui-components/react/some-primitive";
 import { cva, type RecipeVariantProps } from "styled-system/css";
@@ -47,22 +46,21 @@ const {name}Recipe = cva({
 
 type {Name}Variants = RecipeVariantProps<typeof {name}Recipe>;
 
-export type {Name}Props = ComponentPropsWithoutRef<"div"> & // or BaseUI type
+export type {Name}Props = React.ComponentPropsWithoutRef<"div"> & // or BaseUI type
   {Name}Variants & {
+    ref?: React.Ref<HTMLDivElement>;
     // Custom props here
   };
 
-export const {Name} = forwardRef<HTMLDivElement, {Name}Props>(
-  function {Name}({ variant, size, className, ...props }, ref) {
-    return (
-      <div
-        ref={ref}
-        className={{name}Recipe({ variant, size }) + (className ? ` ${className}` : "")}
-        {...props}
-      />
-    );
-  }
-);
+export function {Name}({ variant, size, className, ref, ...props }: {Name}Props) {
+  return (
+    <div
+      ref={ref}
+      className={{name}Recipe({ variant, size }) + (className ? ` ${className}` : "")}
+      {...props}
+    />
+  );
+}
 ```
 
 ### 3. Update the Barrel Export
@@ -79,7 +77,7 @@ Create `src/components/ui/{Name}.stories.tsx` (see storybook-gen skill).
 ## Rules
 
 - **`cva()` only** -- never use `styled()`
-- **`forwardRef` with named function** -- `forwardRef(function MyComponent(...))`
+- **No `forwardRef`** -- React 19 passes `ref` as a regular prop. Accept `ref?: React.Ref<HTMLElement>` in your props type and pass it through directly. `forwardRef` is legacy and will be removed in a future React version.
 - **Export both component and Props type** from the barrel
 - **No `any` types** -- use proper generics or `unknown`
 - **z-index: only -1, 0, 1** -- if the component needs stacking, justify it
