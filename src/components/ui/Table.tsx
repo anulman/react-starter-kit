@@ -108,6 +108,13 @@ export function Table<T>({
         </tr>
       </thead>
       <tbody className={tbodyStyles}>
+        {data.length === 0 && (
+          <tr>
+            <td colSpan={columns.length} className={css({ textAlign: "center", py: "xl", color: "fg.muted" })}>
+              No data available
+            </td>
+          </tr>
+        )}
         {data.map((item) => (
           <tr
             key={keyExtractor(item)}

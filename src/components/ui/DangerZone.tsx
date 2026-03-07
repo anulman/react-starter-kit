@@ -5,8 +5,10 @@ import { Button } from "./Button";
 
 const containerStyles = css({
   mt: "lg",
-  pt: "lg",
-  borderTop: "1px solid token(colors.border)",
+  p: "md",
+  borderLeft: "3px solid token(colors.danger)",
+  bg: "#fff5f5",
+  borderRadius: "sm",
   display: "flex",
   alignItems: "center",
   gap: "xl",
@@ -115,7 +117,7 @@ export function DangerZone({
           </HStack>
         ) : (
           <Button
-            variant="secondary"
+            variant="danger"
             onClick={() => setShowConfirm(true)}
             disabled={disabled}
           >
