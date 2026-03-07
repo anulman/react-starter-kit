@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { DefaultErrorComponent, DefaultNotFound } from "./ErrorBoundary";
 
 // Mock TanStack Router
@@ -40,8 +40,7 @@ describe("DefaultErrorComponent", () => {
   });
 
   it("hides error details in production mode", () => {
-    const original = import.meta.env.DEV;
-    vi.stubEnv("DEV", false as unknown as string);
+    vi.stubEnv("DEV", false);
     try {
       const error = new Error("secret-details");
       error.stack = "Error: secret-details\n    at Object.<anonymous> (file.ts:1:1)";

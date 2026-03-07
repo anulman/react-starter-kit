@@ -5,7 +5,7 @@ import { ConfirmDialog } from "./ConfirmDialog";
 
 // Mock BaseUI AlertDialog to render children directly
 vi.mock("@base-ui-components/react/alert-dialog", () => {
-  const React = require("react");
+
   return {
     AlertDialog: {
       Root: ({ children, open }: any) => (open ? <div>{children}</div> : null),
