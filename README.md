@@ -37,7 +37,7 @@ bun run dev
 
 ## What's Included
 
-### 23 Core Components
+### 24 Core Components
 
 All follow the same pattern: BaseUI primitive → Panda CSS `cva()` recipe → typed props → `ref` as a regular prop (React 19).
 

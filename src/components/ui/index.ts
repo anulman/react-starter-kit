@@ -21,3 +21,4 @@ export { Section, type SectionProps } from "./Section";
 export { Sidebar, type SidebarProps } from "./Sidebar";
 export { Table, type TableProps, type Column } from "./Table";
 export { Timestamp, type TimestampProps } from "./Timestamp";
+export { DangerZone, type DangerZoneProps } from "./DangerZone";
