@@ -36,7 +36,7 @@ chore: update panda css to v1.9
 - [ ] Uses `cva()` for variants, `css()` for static styles
 - [ ] Wraps BaseUI primitive if interactive (Dialog, Select, etc.)
 - [ ] Accepts `className` prop for composition
-- [ ] Uses `forwardRef` for DOM elements
+- [ ] Accepts `ref` as a regular prop (React 19 — no `forwardRef`)
 - [ ] Exported from `src/components/ui/index.ts`
 - [ ] Types exported (`ComponentNameProps`)
 - [ ] No `styled()` — only `css()`/`cva()`

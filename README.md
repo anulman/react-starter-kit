@@ -23,6 +23,24 @@ bun install
 bun run dev
 ```
 
+### Post-Clone Checklist
+
+After cloning, replace these placeholders with your project's details:
+
+| File | What to change |
+|------|---------------|
+| `package.json` | `"name"` — your package name |
+| `wrangler.jsonc` | `"name"` — your Cloudflare Worker name |
+| `.env.schema` | Add `VITE_APP_NAME` with your app name (used in page titles via `makeHead()`) |
+| `src/routes/_app/index.tsx` | Replace landing page heading and description |
+| `README.md` | Replace this README with your own |
+| `CLAUDE.md` | Update project-specific conventions as you go |
+
+For local dev, create a `.dev.vars` file:
+```
+VITE_APP_NAME=My App
+```
+
 ## Stack
 
 | Layer | Choice | Why |
@@ -33,10 +51,11 @@ bun run dev
 | **Components** | [BaseUI](https://base-ui.com) | Headless accessible primitives |
 | **Deployment** | [Cloudflare Workers](https://workers.cloudflare.com) | Edge SSR via `@cloudflare/vite-plugin` |
 | **Testing** | [Vitest](https://vitest.dev) | Vite-native, fast |
+| **Storybook** | [Storybook 10](https://storybook.js.org) | Component explorer with a11y addon |
 
 ## What's Included
 
-### 14 Core Components
+### 24 Core Components
 
 All follow the same pattern: BaseUI primitive → Panda CSS `cva()` recipe → typed props → `ref` as a regular prop (React 19).
 
@@ -175,6 +194,36 @@ export const getItems = createServerFn({ method: "GET" })
   });
 ```
 
+### Storybook
+
+Storybook 10 is pre-configured with Panda CSS support and the a11y addon. The config filters out TanStack Start and Cloudflare plugins that don't apply in the Storybook context.
+
+```bash
+bun run storybook  # Opens on http://localhost:6006
+```
+
+Add stories next to your components:
+
+```tsx
+// src/components/ui/Button.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "./Button";
+
+const meta = {
+  component: Button,
+  args: { children: "Click me" },
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = { args: { variant: "primary" } };
+export const Ghost: Story = { args: { variant: "ghost" } };
+export const Loading: Story = { args: { loading: true } };
+```
+
+For deployment options (CF Pages, subdirectory), see `recipes/storybook-deploy/`.
+
 ### Environment Variables
 
 Environment validation is handled by [varlock](https://varlock.dev) via `.env.schema`. The included schema is scaffolded — expand for your project. Add `@required`, `@type`, `@sensitive` decorators to define your schema. Varlock validates on load and fails fast with clear errors.
@@ -291,27 +340,17 @@ function CheckoutButton() {
 
 **Extra deps:** `posthog-js`, `posthog-node`
 
-### `recipes/storybook/`  --  Component Stories
-
-Storybook config pre-wired for Panda CSS + BaseUI components. Includes a11y addon.
-
-```bash
-# After copying .storybook/ config:
-bun run storybook
-# Opens on http://localhost:6006
-```
-
-**Extra deps:** `storybook`, `@storybook/react-vite`, `@storybook/addon-a11y`
-
 ## Commands
 
 ```bash
-bun run dev          # Start dev server (port 3000)
-bun run build        # Production build
-bun run preview      # Preview production build locally
-bun run test         # Run tests (Vitest)
-bun run typecheck    # TypeScript check
-bun run deploy       # Deploy to Cloudflare Workers
+bun run dev              # Start dev server (port 3000)
+bun run build            # Production build
+bun run preview          # Preview production build locally
+bun run test             # Run tests (Vitest)
+bun run typecheck        # TypeScript check
+bun run storybook        # Storybook dev server (port 6006)
+bun run build:storybook  # Build static Storybook
+bun run deploy           # Deploy to Cloudflare Workers
 ```
 
 ## Project Structure
@@ -321,17 +360,17 @@ bun run deploy       # Deploy to Cloudflare Workers
 │   ├── components/
 │   │   ├── ui/           # Design system (Button, Input, Modal, etc.)
 │   │   ├── layout/       # Flex, Grid, HStack, VStack, Box, Center
-│   │   └── icons/        # Minimal icon set (7 icons)
+│   │   └── icons/        # 7 icons from Untitled UI (thin React wrappers)
 │   ├── lib/
 │   │   ├── env.ts        # Client env flags (isProduction, isDevelopment)
 │   │   └── serverEnv.ts  # Server env (re-exports varlock ENV)
 │   ├── routes/           # File-based routing (TanStack Start)
-│   ├── styles/
-│   │   └── global.css    # Global styles + Panda CSS layers
+│   ├── styles.css        # Global styles + Panda CSS layers
 │   ├── router.ts         # Router config + context type
 │   ├── start.ts          # SSR entry
 │   └── client.tsx        # Client entry
-├── recipes/              # Opt-in patterns (auth, markdown, convex, etc.)
+├── .storybook/           # Storybook config (pre-wired for Panda CSS + BaseUI)
+├── recipes/              # Opt-in patterns (auth, authoring, convex, analytics, pickers, storybook-deploy)
 ├── docs/                 # Architecture decisions, component API, deployment
 ├── styled-system/        # Generated by Panda CSS (gitignored)
 ├── panda.config.ts       # Design tokens + theme
