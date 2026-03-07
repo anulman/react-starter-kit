@@ -4,15 +4,15 @@ Installs a recipe from the `recipes/` directory into the active project.
 
 ## When to Use
 
-When asked to add auth, forms, authoring/markdown, Convex, or PostHog analytics to the project.
+When asked to add auth, authoring/markdown, Convex, PostHog analytics, or pickers to the project.
 
 ## Available Recipes
 
 | Recipe | Directory | Extra Dependencies |
 |--------|-----------|-------------------|
 | Auth (OTP + sessions) | `recipes/auth/` | `twilio` (or your SMS/email provider) |
-
 | Authoring (Markdown + rich text) | `recipes/authoring/` | `react-markdown`, `remark-gfm`, `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-placeholder` |
+| Pickers (Color + Icon) | `recipes/pickers/` | `react-colorful`, `lucide-react` |
 | Convex | `recipes/convex/` | `convex`, `@convex-dev/react-query` |
 | Analytics (PostHog) | `recipes/analytics/` | `posthog-js`, `posthog-node` |
 | Storybook Deploy | `recipes/storybook-deploy/` | None (Storybook is already a core dependency) |
@@ -44,6 +44,7 @@ Copy recipe files into the appropriate location in `src/`. Recommended structure
 | Authoring | `src/features/authoring/` |
 | Convex | `convex/` (project root) + `src/lib/convex.ts` |
 | Analytics | `src/lib/analytics.ts` + provider in `__root.tsx` |
+| Pickers | `src/components/ui/` or `src/features/pickers/` |
 | Storybook Deploy | CI config (`.github/workflows/`) |
 
 ### 4. Wire Up

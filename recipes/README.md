@@ -10,6 +10,7 @@ Drop-in patterns you can copy into your project. Each recipe is self-contained w
 | **authoring/** | Markdown rendering + rich text editing | `react-markdown`, `remark-gfm`, TipTap |
 | **convex/** | Convex real-time database integration | `convex`, `@convex-dev/react-query` |
 | **analytics/** | PostHog analytics scaffolding | `posthog-js`, `posthog-node` |
+| **pickers/** | Color + Icon pickers | `react-colorful`, `lucide-react` |
 | **storybook-deploy/** | Storybook deployment to CF Pages | None (Storybook is a core dependency) |
 
 ## How to Use

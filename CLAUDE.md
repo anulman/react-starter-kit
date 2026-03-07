@@ -313,6 +313,7 @@ The `recipes/` directory contains drop-in patterns:
 - **authoring/** — Markdown rendering + TipTap rich text editor
 - **convex/** — Convex real-time database integration
 - **analytics/** — PostHog scaffolding
+- **pickers/** — Color + Icon pickers (react-colorful, lucide-react)
 - **storybook-deploy/** — Storybook deployment to CF Pages
 
 Each recipe has its own README with setup instructions and required dependencies.
