@@ -23,6 +23,24 @@ bun install
 bun run dev
 ```
 
+### Post-Clone Checklist
+
+After cloning, replace these placeholders with your project's details:
+
+| File | What to change |
+|------|---------------|
+| `package.json` | `"name"` — your package name |
+| `wrangler.jsonc` | `"name"` — your Cloudflare Worker name |
+| `.env.schema` | Add `VITE_APP_NAME` with your app name (used in page titles via `makeHead()`) |
+| `src/routes/_app/index.tsx` | Replace landing page heading and description |
+| `README.md` | Replace this README with your own |
+| `CLAUDE.md` | Update project-specific conventions as you go |
+
+For local dev, create a `.dev.vars` file:
+```
+VITE_APP_NAME=My App
+```
+
 ## Stack
 
 | Layer | Choice | Why |
