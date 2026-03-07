@@ -50,6 +50,7 @@ const buttonRecipe = cva({
       ghost: {
         bg: "transparent",
         color: "fg",
+        border: "1px solid token(colors.stroke)",
         _hover: {
           bg: "bg.surface",
         },

@@ -27,7 +27,7 @@ export default defineConfig({
       colors: {
         background: { value: "#ffffff" },
         surface: { value: "#f5f5f5" },
-        border: { value: "#e0e0e0" },
+        border: { value: "#b0b0b0" },
         text: {
           DEFAULT: { value: "#1a1a1a" },
           muted: { value: "#666666" },
@@ -37,7 +37,7 @@ export default defineConfig({
           DEFAULT: { value: "#007bff" },
           hover: { value: "#0056b3" },
         },
-        success: { value: "#28a745" },
+        success: { value: "#1a7a35" },
         warning: { value: "#ffc107" },
         danger: { value: "#dc3545" },
       },
@@ -125,14 +125,14 @@ export default defineConfig({
         // Interactive / status colors — adjusted for dark backgrounds
         primary: {
           DEFAULT: {
-            value: { base: "{colors.primary}", _dark: "#3b9eff" },
+            value: { base: "#007bff", _dark: "#3b9eff" },
           },
           hover: {
             value: { base: "#0056b3", _dark: "#66b3ff" },
           },
         },
         success: {
-          value: { base: "#28a745", _dark: "#34d058" },
+          value: { base: "#1a7a35", _dark: "#34d058" },
         },
         warning: {
           value: { base: "#ffc107", _dark: "#ffd33d" },
