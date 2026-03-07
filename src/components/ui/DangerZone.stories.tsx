@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { userEvent, within, expect, waitFor } from "@storybook/test";
-import { fn } from "@storybook/test";
+import { userEvent, within, expect, waitFor } from "storybook/test";
+import { fn } from "storybook/test";
 import { DangerZone } from "./DangerZone";
 
 const meta = {
