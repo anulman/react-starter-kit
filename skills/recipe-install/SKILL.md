@@ -11,7 +11,7 @@ When asked to add auth, forms, authoring/markdown, Convex, or PostHog analytics 
 | Recipe | Directory | Extra Dependencies |
 |--------|-----------|-------------------|
 | Auth (OTP + sessions) | `recipes/auth/` | `twilio` (or your SMS/email provider) |
-| Forms | `recipes/forms/` | None (zod + @tanstack/react-form already included) |
+
 | Authoring (Markdown + rich text) | `recipes/authoring/` | `react-markdown`, `remark-gfm`, `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-placeholder` |
 | Convex | `recipes/convex/` | `convex`, `@convex-dev/react-query` |
 | Analytics (PostHog) | `recipes/analytics/` | `posthog-js`, `posthog-node` |
@@ -41,7 +41,6 @@ Copy recipe files into the appropriate location in `src/`. Recommended structure
 | Recipe | Target Location |
 |--------|----------------|
 | Auth | `src/features/auth/` |
-| Forms | Follow pattern in README (no files to copy, just a pattern) |
 | Authoring | `src/features/authoring/` |
 | Convex | `convex/` (project root) + `src/lib/convex.ts` |
 | Analytics | `src/lib/analytics.ts` + provider in `__root.tsx` |
