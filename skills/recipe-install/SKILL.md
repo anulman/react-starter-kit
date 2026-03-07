@@ -4,7 +4,7 @@ Installs a recipe from the `recipes/` directory into the active project.
 
 ## When to Use
 
-When asked to add auth, forms, authoring/markdown, Convex, PostHog analytics, or Storybook to the project.
+When asked to add auth, forms, authoring/markdown, Convex, or PostHog analytics to the project.
 
 ## Available Recipes
 
@@ -15,7 +15,7 @@ When asked to add auth, forms, authoring/markdown, Convex, PostHog analytics, or
 | Authoring (Markdown + rich text) | `recipes/authoring/` | `react-markdown`, `remark-gfm`, `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-placeholder` |
 | Convex | `recipes/convex/` | `convex`, `@convex-dev/react-query` |
 | Analytics (PostHog) | `recipes/analytics/` | `posthog-js`, `posthog-node` |
-| Storybook | `recipes/storybook/` | `storybook`, `@storybook/react-vite`, `@storybook/addon-a11y`, `@storybook/test` |
+| Storybook Deploy | `recipes/storybook-deploy/` | None (Storybook is already a core dependency) |
 
 ## Process
 
@@ -45,7 +45,7 @@ Copy recipe files into the appropriate location in `src/`. Recommended structure
 | Authoring | `src/features/authoring/` |
 | Convex | `convex/` (project root) + `src/lib/convex.ts` |
 | Analytics | `src/lib/analytics.ts` + provider in `__root.tsx` |
-| Storybook | `.storybook/` (project root) |
+| Storybook Deploy | CI config (`.github/workflows/`) |
 
 ### 4. Wire Up
 
