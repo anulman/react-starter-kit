@@ -3,7 +3,7 @@ import { type ReactNode, useEffect } from "react";
 import * as tsr from "@tanstack/react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import type { RouterContext } from "@/router";
-import globalStyles from "@/styles/global.css?url";
+import globalStyles from "@/styles.css?url";
 import { ToastProvider } from "@/components/ui";
 import {
   DefaultErrorComponent,

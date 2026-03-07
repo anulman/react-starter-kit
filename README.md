@@ -365,8 +365,7 @@ bun run deploy           # Deploy to Cloudflare Workers
 │   │   ├── env.ts        # Client env flags (isProduction, isDevelopment)
 │   │   └── serverEnv.ts  # Server env (re-exports varlock ENV)
 │   ├── routes/           # File-based routing (TanStack Start)
-│   ├── styles/
-│   │   └── global.css    # Global styles + Panda CSS layers
+│   ├── styles.css        # Global styles + Panda CSS layers
 │   ├── router.ts         # Router config + context type
 │   ├── start.ts          # SSR entry
 │   └── client.tsx        # Client entry
