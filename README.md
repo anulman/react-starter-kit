@@ -11,6 +11,9 @@ An opinionated template for building React apps on Cloudflare Workers. TanStack 
 gh repo create my-app --template anulman/react-starter-kit --clone
 cd my-app
 
+# Or with bun
+bun create anulman/react-starter-kit my-app
+
 # Or clone directly
 git clone https://github.com/anulman/react-starter-kit.git my-app
 cd my-app
